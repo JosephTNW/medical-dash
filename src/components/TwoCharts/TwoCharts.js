@@ -1,13 +1,13 @@
 import React from 'react';
-import MediumChart from '../MediumChart/MediumChart';
+import MediumPlotChart from '../MediumPlotChart/MediumPlotChart';
 
 const TwoCharts = () => {
-    return (
-        <div className="two-chart">
-            <MediumChart/>
-            <MediumChart/>
-        </div>
-    );
+  return (
+    <div className="two-chart" style={{ display: "flex", justifyContent: "space-between" }}>
+      <MediumPlotChart dataGroup={4} />
+      <MediumPlotChart dataGroup={5} />
+    </div>
+  );
 };
 
 export default TwoCharts;
