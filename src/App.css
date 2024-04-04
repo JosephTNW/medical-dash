@@ -1,25 +1,20 @@
+html,
+body,
+h2,
+p {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
 .App {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+.App-background {
+  background-color: lightblue;
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
 }
@@ -28,11 +23,114 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.sidebar {
+  background-color: #98ABEE;
+  width: 20vw;
+  height: 100vh;
+  padding: 20px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  width: 80%;
+  cursor: pointer;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 20px;
+}
+
+.menu-item:hover {
+  background-color: #6C7EEB;
+  transition: ease-in-out 0.3s;
+}
+
+.brand-logo {
+  width: 50px;
+  height: 50px;
+}
+
+.brand-name {
+  font-size: 1em;
+  margin: 0px 10px;
+}
+
+.wide-panel {
+  display: flex;
+  height: fit-content;
+  padding: 20px;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #98ABEE;
+  border-radius: 20px;
+}
+
+.wide-panel img {
+  width: 100px;
+}
+
+.text-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.text-container h2 {
+  font-size: 1em;
+}
+
+.text-container p {
+  font-size: 0.8em;
+}
+
+.mainsection {
+  width: 80vw;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
+
+.two-chart,
+.three-chart {
+  display: flex;
+  width: 80vw;
+  justify-content: space-between;
+}
+
+.medium-chart {
+  display: flex;
+  width: 37vw;
+  background-color: #98ABEE;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.small-chart {
+  display: flex;
+  width: 23.5vw;
+  background-color: #98ABEE;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.wide-chart {
+  display: flex;
+  background-color: #98ABEE;
+  border-radius: 20px;
+  padding: 20px;
 }
