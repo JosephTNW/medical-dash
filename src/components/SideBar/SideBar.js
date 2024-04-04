@@ -13,10 +13,12 @@ class SideBar extends React.Component {
     }
   
     render() {
+        const { selected } = this.props;
+
         return (
         <div className="sidebar">
             <Brand />
-            <Menu onClick={this.handleClick}/>
+            <Menu selected={selected} onClick={this.handleClick}/>
         </div>
         );
   }

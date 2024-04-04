@@ -25,7 +25,6 @@ p {
 
 .sidebar {
   background-color: #98ABEE;
-  width: 20vw;
   height: 100vh;
   padding: 20px;
 }
@@ -54,7 +53,7 @@ p {
   border-radius: 20px;
 }
 
-.menu-item:hover {
+.menu-item:hover, .active {
   background-color: #6C7EEB;
   transition: ease-in-out 0.3s;
 }

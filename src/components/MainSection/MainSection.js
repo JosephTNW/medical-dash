@@ -6,10 +6,10 @@ import ThreeCharts from "../ThreeCharts/ThreeCharts";
 import Form from "../Form/Form";
 
 class MainSection extends React.Component {
-    render() {
+  render() {
     const { selected } = this.props;
-    console.log("selected ", selected)
-    if (selected === "dashboard") {
+
+    if (selected === "Dashboard") {
       return (
         <div className="mainsection">
           <WelcomePanel />
@@ -21,7 +21,7 @@ class MainSection extends React.Component {
     } else {
       return (
         <div className="mainsection">
-          <Form/>          
+          <Form />
         </div>
       );
     }

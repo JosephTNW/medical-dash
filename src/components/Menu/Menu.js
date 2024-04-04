@@ -2,20 +2,22 @@ import React from "react";
 import MenuItem from "../../MenuItem/MenuItem";
 
 class Menu extends React.Component {
-    constructor(props){
-        super(props);
-        this.handleItemClick = this.handleItemClick.bind(this);
-    }
+  constructor(props){
+      super(props);
+      this.handleItemClick = this.handleItemClick.bind(this);
+  }
 
   handleItemClick = (item) => {
     this.props.onClick(item);
   };
 
   render() {
+    const { selected } = this.props;
+
     return (
       <div className="menu">
-        <MenuItem icon="🏠" name="Dashboard" onClick={this.handleItemClick("dashboard")} />
-        <MenuItem icon="🧐" name="Predict" onClick={this.handleItemClick("form")}/>
+        <MenuItem selected={selected} icon="🏠" name="Dashboard" onClick={() => this.handleItemClick('Dashboard')} />
+        <MenuItem selected={selected} icon="🧐" name="Predict" onClick={() => this.handleItemClick('Predict')}/>
       </div>
     );
   }

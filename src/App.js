@@ -20,7 +20,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App-background">
-        <SideBar onClick={this.handleSidebarClick}/>
+        <SideBar selected={this.state.selected} onClick={this.handleSidebarClick}/>
         <MainSection selected={this.state.selected}/>
       </div>
     );
