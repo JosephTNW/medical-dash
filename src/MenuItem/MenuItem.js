@@ -1,12 +1,15 @@
-import React from 'react';
+import React from "react";
 
-const MenuItem = ({ icon, name }) => {
+class MenuItem extends React.Component {
+
+  render() {
     return (
-        <div className="menu-item">
-            <div className="menu-item-icon">{icon}</div>
-            <div className="menu-item-name">{name}</div>
-        </div>
+      <div onClick={this.props.onClick} className="menu-item">
+        <div className="menu-item-icon">{this.props.icon}</div>
+        <div className="menu-item-name">{this.props.name}</div>
+      </div>
     );
-};
+  }
+}
 
 export default MenuItem;
