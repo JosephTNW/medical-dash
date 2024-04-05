@@ -37,8 +37,13 @@ const MediumPlotChart = ({ dataGroup }) => {
     }, []);
     
     useEffect(() => {
-        if (!isLoading && data.length > 0 && selectedColumn) {
-            renderChart();
+        if (!isLoading && data.length > 0) {
+            // Initialize selectedColumn with the first option from the respective data group
+            if (dataGroup === 4) {
+                setSelectedColumn("Height");
+            } else if (dataGroup === 5) {
+                setSelectedColumn("Alcohol Consumption");
+            }
         }
     }, [isLoading, data, selectedColumn]);
     
@@ -59,146 +64,146 @@ const MediumPlotChart = ({ dataGroup }) => {
         // Filter out null and undefined values
         const filteredData = columnData.filter(
             (value) => value !== null && value !== undefined
-            );
-            
-            // Calculate the frequency of each value
-            const valueCounts = filteredData.reduce((counts, value) => {
-                counts[value] = (counts[value] || 0) + 1;
-                return counts;
-            }, {});
-            
-            // Extract unique values and sort them
-            const uniqueValues = Object.keys(valueCounts).sort();
-            
-            // Extract data for the chart
-            const seriesData = uniqueValues.map((value) => ({
-                name: value,
-                y: valueCounts[value],
-            }));
-            
-            // Render the chart
-            const options = {
-                chart: {
-                    type: chartType,
-                    backgroundColor: "#98ABEE",
-                    borderRadius: 10,
+        );
+        
+        // Calculate the frequency of each value
+        const valueCounts = filteredData.reduce((counts, value) => {
+            counts[value] = (counts[value] || 0) + 1;
+            return counts;
+        }, {});
+        
+        // Extract unique values and sort them
+        const uniqueValues = Object.keys(valueCounts).sort();
+        
+        // Extract data for the chart
+        const seriesData = uniqueValues.map((value) => ({
+            name: value,
+            y: valueCounts[value],
+        }));
+        
+        // Render the chart
+        const options = {
+            chart: {
+                type: chartType,
+                backgroundColor: "#98ABEE",
+                borderRadius: 10,
+            },
+            title: {
+                text: selectedColumn,
+                style: {
+                    color: "white", // Font color set to white
                 },
+            },
+            credits: {
+                enabled: false,
+            },
+            plotOptions: {
+                series: {
+                    turboThreshold: 200000, // Number of data points
+                    color: "#59c3ff",
+                    borderWidth: 0, // Remove border around bars
+                },
+                pie: {
+                    colors: [
+                        "#5FC6E6",
+                        "#07216A",
+                        "#8595F0",
+                        "#651997",
+                        "#1D56F6",
+                        "#8c564b",
+                    ], // Adjusted colors for pie chart slices
+                },
+            },
+            legend: {
+                itemStyle: {
+                    color: "white", // Legend text color set to white
+                },
+            },
+            xAxis: {
+                categories: uniqueValues,
                 title: {
-                    text: selectedColumn,
+                    text: "Category",
                     style: {
                         color: "white", // Font color set to white
                     },
                 },
-                credits: {
-                    enabled: false,
-                },
-                plotOptions: {
-                    series: {
-                        turboThreshold: 200000, // Number of data points
-                        color: "#59c3ff",
-                        borderWidth: 0, // Remove border around bars
-                    },
-                    pie: {
-                        colors: [
-                            "#5FC6E6",
-                            "#07216A",
-                            "#8595F0",
-                            "#651997",
-                            "#1D56F6",
-                            "#8c564b",
-                        ], // Adjusted colors for pie chart slices
+                labels: {
+                    style: {
+                        color: "white", // Font color set to white
                     },
                 },
-                legend: {
-                    itemStyle: {
-                        color: "white", // Legend text color set to white
+            },
+            yAxis: {
+                title: {
+                    categories: valueCounts,
+                    text: "Frequency",
+                    style: {
+                        color: "white", // Font color set to white
                     },
                 },
-                xAxis: {
-                    categories: uniqueValues,
-                    title: {
-                        text: "Category",
-                        style: {
-                            color: "white", // Font color set to white
-                        },
-                    },
-                    labels: {
-                        style: {
-                            color: "white", // Font color set to white
-                        },
+                labels: {
+                    style: {
+                        color: "white", // Font color set to white
                     },
                 },
-                yAxis: {
-                    title: {
-                        categories: valueCounts,
-                        text: "Frequency",
-                        style: {
-                            color: "white", // Font color set to white
-                        },
-                    },
-                    labels: {
-                        style: {
-                            color: "white", // Font color set to white
-                        },
-                    },
+            },
+            series: [
+                {
+                    name: "Frequency",
+                    data: seriesData,
                 },
-                series: [
-                    {
-                        name: "Frequency",
-                        data: seriesData,
-                    },
-                ],
-            };
-            
-            return (
-                <HighchartsReact
-                highcharts={Highcharts}
-                options={options}
-                ref={chartRef}
-                />
-                );
-            };
-            
-            
-            return (
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <div id="chart-container" style={{ position: "relative" }}>
-                <div style={{ position: "absolute", top: 10, right: "20px", zIndex: 1000 }}>
-                <select value={selectedColumn} onChange={handleColumnChange} style={{ color: "black" }}>
-                {dataGroup === 4 && (
-                    <>
-                    <option value="Height">Height (cm)</option>
-                    <option value="Weight">Weight (kg)</option>
-                    <option value="BMI">BMI</option>
-                    </>
-                    )}
-                    {dataGroup === 5 && (
-                        <>
-                        <option value="Alcohol Consumption">Alcohol Consumption</option>
-                        <option value="Fruit Consumption">Fruit Consumption</option>
-                        <option value="Green Vegetables_Consumption">Green Vegetables Consumption</option>
-                        <option value="FriedPotato Consumption">Fried Potato Consumption</option>
-                        </>
-                        )}
-                        </select>
-                        </div>
-                        <div style={{ position: "absolute", zIndex: 3000, top: "10px", left: "20px" }}>
-                        <select value={chartType} onChange={handleChartTypeChange} style={{ color: "black" }}>
-                        <option value="bar" style={{ color: "black" }}>
-                        Bar Chart
-                        </option>
-                        <option value="pie" style={{ color: "black" }}>
-                        Pie Chart
-                        </option>
-                        <option value="area" style={{ color: "black" }}>
-                        Area
-                        </option>
-                        </select>
-                        </div>
-                        {renderChart()}
-                        </div>
-                        </div>
-                        );
-                    };    
-                    
-                    export default MediumPlotChart;
+            ],
+        };
+        
+        return (
+            <HighchartsReact
+            highcharts={Highcharts}
+            options={options}
+            ref={chartRef}
+            />
+        );
+    };
+    
+    
+    return (
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <div id="chart-container" style={{ position: "relative" }}>
+        <div style={{ position: "absolute", top: 10, right: "20px", zIndex: 1000 }}>
+        <select value={selectedColumn} onChange={handleColumnChange} style={{ color: "black" }}>
+        {dataGroup === 4 && (
+            <>
+            <option value="Height">Height (cm)</option>
+            <option value="Weight">Weight (kg)</option>
+            <option value="BMI">BMI</option>
+            </>
+        )}
+        {dataGroup === 5 && (
+            <>
+            <option value="Alcohol Consumption">Alcohol Consumption</option>
+            <option value="Fruit Consumption">Fruit Consumption</option>
+            <option value="Green Vegetables_Consumption">Green Vegetables Consumption</option>
+            <option value="FriedPotato Consumption">Fried Potato Consumption</option>
+            </>
+        )}
+        </select>
+        </div>
+        <div style={{ position: "absolute", zIndex: 3000, top: "10px", left: "20px" }}>
+        <select value={chartType} onChange={handleChartTypeChange} style={{ color: "black" }}>
+        <option value="bar" style={{ color: "black" }}>
+        Bar Chart
+        </option>
+        <option value="pie" style={{ color: "black" }}>
+        Pie Chart
+        </option>
+        <option value="area" style={{ color: "black" }}>
+        Area
+        </option>
+        </select>
+        </div>
+        {renderChart()}
+        </div>
+        </div>
+    );
+};    
+
+export default MediumPlotChart;
