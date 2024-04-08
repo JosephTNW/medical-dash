@@ -216,31 +216,7 @@ const WidePlotChart = () => {
             <option value="Smoking_History" style={{ color: "black" }}>
               Smoking History
             </option>
-
-            <option value="Height_(cm)" style={{ color: "black" }}>
-              Height (cm)
-            </option>
-            <option value="Weight_(kg)" style={{ color: "black" }}>
-              Weight (kg)
-            </option>
-            <option value="BMI" style={{ color: "black" }}>
-              BMI
-            </option>
-            <option value="Alcohol_Consumption" style={{ color: "black" }}>
-              Alcohol Consumption
-            </option>
-            <option value="Fruit_Consumption" style={{ color: "black" }}>
-              Fruit Consumption
-            </option>
-            <option
-              value="Green_Vegetables_Consumption"
-              style={{ color: "black" }}
-            >
-              Green Vegetables Consumption
-            </option>
-            <option value="FriedPotato_Consumption" style={{ color: "black" }}>
-              Fried Potato Consumption
-            </option>
+            
           </select>
         </div>
         <div
