@@ -1,4 +1,5 @@
 import React from 'react';
+import MediumChart from '../MediumPlotChart/MediumPlotChart';
 
 const MediumChart = () => {
     return (

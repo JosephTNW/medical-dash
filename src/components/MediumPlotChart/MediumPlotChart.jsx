@@ -23,6 +23,12 @@ const MediumPlotChart = ({ dataGroup }) => {
                     header: true,
                     dynamicTyping: true,
                     complete: (results) => {
+
+                        console.log(
+                            "data:",
+                            results.data.map((item) => item["Height (cm)"])
+                          );
+
                         setData(results.data);
                         setIsLoading(false);
                     },
@@ -39,13 +45,19 @@ const MediumPlotChart = ({ dataGroup }) => {
     useEffect(() => {
         if (!isLoading && data.length > 0) {
             // Initialize selectedColumn with the first option from the respective data group
+            let firstOption = "";
             if (dataGroup === 4) {
-                setSelectedColumn("Height");
+                const availableOptions = ["Height_(cm)", "Weight_(kg)", "BMI"];
+                firstOption = availableOptions.find(option => data[0][option] !== null && data[0][option] !== undefined);
             } else if (dataGroup === 5) {
-                setSelectedColumn("Alcohol Consumption");
+                const availableOptions = ["Alcohol_Consumption", "Fruit_Consumption", "Green_Vegetables_Consumption", "FriedPotato_Consumption"];
+                firstOption = availableOptions.find(option => data[0][option] !== null && data[0][option] !== undefined);
             }
+            setSelectedColumn(firstOption);
         }
-    }, [isLoading, data, selectedColumn]);
+    }, [isLoading, data, dataGroup]);
+    
+    
     
     const handleColumnChange = (event) => {
         setSelectedColumn(event.target.value);
@@ -172,17 +184,17 @@ const MediumPlotChart = ({ dataGroup }) => {
         <select value={selectedColumn} onChange={handleColumnChange} style={{ color: "black" }}>
         {dataGroup === 4 && (
             <>
-            <option value="Height">Height (cm)</option>
-            <option value="Weight">Weight (kg)</option>
+            <option value="Height_(cm)">Height</option>
+            <option value="Weight_(kg)">Weight</option>
             <option value="BMI">BMI</option>
             </>
         )}
         {dataGroup === 5 && (
             <>
-            <option value="Alcohol Consumption">Alcohol Consumption</option>
-            <option value="Fruit Consumption">Fruit Consumption</option>
-            <option value="Green Vegetables_Consumption">Green Vegetables Consumption</option>
-            <option value="FriedPotato Consumption">Fried Potato Consumption</option>
+            <option value="Alcohol_Consumption">Alcohol Consumption</option>
+            <option value="Fruit_Consumption">Fruit Consumption</option>
+            <option value="Green_Vegetables_Consumption">Green Vegetables Consumption</option>
+            <option value="FriedPotato_Consumption">Fried Potato Consumption</option>
             </>
         )}
         </select>
