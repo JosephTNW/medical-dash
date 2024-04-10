@@ -23,11 +23,6 @@ const WidePlotChart = () => {
           header: true,
           dynamicTyping: true,
           complete: (results) => {
-            console.log(
-              "BMI data:",
-              results.data.map((item) => item["BMI"])
-            );
-
             setData(results.data);
             setIsLoading(false);
           },

@@ -23,12 +23,6 @@ const MediumPlotChart = ({ dataGroup }) => {
                     header: true,
                     dynamicTyping: true,
                     complete: (results) => {
-
-                        console.log(
-                            "data:",
-                            results.data.map((item) => item["Height (cm)"])
-                          );
-
                         setData(results.data);
                         setIsLoading(false);
                     },
@@ -56,8 +50,6 @@ const MediumPlotChart = ({ dataGroup }) => {
             setSelectedColumn(firstOption);
         }
     }, [isLoading, data, dataGroup]);
-    
-    
     
     const handleColumnChange = (event) => {
         setSelectedColumn(event.target.value);

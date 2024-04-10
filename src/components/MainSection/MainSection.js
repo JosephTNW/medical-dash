@@ -4,6 +4,7 @@ import TwoCharts from "../TwoCharts/TwoCharts";
 import WideChart from "../WideChart/WideChart";
 import ThreeCharts from "../ThreeCharts/ThreeCharts";
 import Form from "../Form/Form";
+import PatientsList from "../PatientsList/PatientsList";
 
 class MainSection extends React.Component {
   render() {
@@ -16,6 +17,12 @@ class MainSection extends React.Component {
           <TwoCharts />
           <WideChart />
           <ThreeCharts />
+        </div>
+      );
+    } else if (selected === "Manage") {
+      return (
+        <div className="mainsection">
+          <PatientsList />
         </div>
       );
     } else {

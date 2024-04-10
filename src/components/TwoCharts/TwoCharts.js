@@ -4,7 +4,7 @@ import WidePlotChart from '../WidePlotChart/WidePlotChart';
 
 const TwoCharts = () => {
   return (
-    <div className="two-chart" style={{ display: "flex", justifyContent: "space-between" }}>
+    <div className="two-chart">
       <MediumPlotChart dataGroup={4} />
       <MediumPlotChart dataGroup={5} />
     </div>
