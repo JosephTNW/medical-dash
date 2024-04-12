@@ -167,75 +167,46 @@ const WidePlotChart = () => {
   };
 
   return (
-    <div style={{ display: "flex", justifyContent: "space-between" }}>
-      <div id="chart-container" style={{ position: "relative" }}>
-        <div style={{ position: "absolute", top: 10, right:"20px", zIndex: 1000 }}>
+    <div
+      className="wide-chart" 
+      style={{
+        position: "relative",
+        minWidth: 0,
+        }}
+    >
+      <div
+        id="chart-container"
+        style={{ position: "relative", flex: 1, minWidth: "0" }}
+      >
+        <div style={{ position: "absolute", top: 10, right: "20px", zIndex: 1000 }}>
           <select
             value={selectedCategory}
             onChange={handleCategoryChange}
             style={{ color: "black" }}
           >
-            <option value="General_Health" style={{ color: "black" }}>
-              General Health
-            </option>
-            <option value="Checkup" style={{ color: "black" }}>
-              Checkup
-            </option>
-            <option value="Exercise" style={{ color: "black" }}>
-              Exercise
-            </option>
-            <option value="Heart_Disease" style={{ color: "black" }}>
-              Heart Disease
-            </option>
-            <option value="Skin_Cancer" style={{ color: "black" }}>
-              Skin Cancer
-            </option>
-            <option value="Other_Cancer" style={{ color: "black" }}>
-              Other Cancer
-            </option>
-            <option value="Depression" style={{ color: "black" }}>
-              Depression
-            </option>
-            <option value="Diabetes" style={{ color: "black" }}>
-              Diabetes
-            </option>
-            <option value="Arthritis" style={{ color: "black" }}>
-              Arthritis
-            </option>
-            <option value="Sex" style={{ color: "black" }}>
-              Sex
-            </option>
-            <option value="Age_Category" style={{ color: "black" }}>
-              Age Category
-            </option>
-            <option value="Smoking_History" style={{ color: "black" }}>
-              Smoking History
-            </option>
-            
+            <option value="General_Health">General Health</option>
+            <option value="Checkup">Checkup</option>
+            <option value="Exercise">Exercise</option>
+            <option value="Heart_Disease">Heart Disease</option>
+            <option value="Skin_Cancer">Skin Cancer</option>
+            <option value="Other_Cancer">Other Cancer</option>
+            <option value="Depression">Depression</option>
+            <option value="Diabetes">Diabetes</option>
+            <option value="Arthritis">Arthritis</option>
+            <option value="Sex">Sex</option>
+            <option value="Age_Category">Age Category</option>
+            <option value="Smoking_History">Smoking History</option>
           </select>
         </div>
-        <div
-          style={{
-            position: "absolute",
-            zIndex: 2000,
-            top: "10px",
-            left: "20px",
-          }}
-        >
+        <div style={{ position: "absolute", zIndex: 2000, top: "10px", left: "20px" }}>
           <select
             value={chartType}
             onChange={handleChartTypeChange}
             style={{ color: "black" }}
           >
-            <option value="bar" style={{ color: "black" }}>
-              Bar Chart
-            </option>
-            <option value="pie" style={{ color: "black" }}>
-              Pie Chart
-            </option>
-            <option value="area" style={{ color: "black" }}>
-              Area
-            </option>
+            <option value="bar">Bar Chart</option>
+            <option value="pie">Pie Chart</option>
+            <option value="area">Area</option>
           </select>
         </div>
         {renderChart()}

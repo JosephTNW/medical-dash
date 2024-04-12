@@ -117,6 +117,9 @@ p, ul {
   display: flex;
   width: 100%;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px; 
+  overflow-x: hidden; /* Prevent horizontal overflow */
 }
 
 .three-chart {
@@ -126,11 +129,12 @@ p, ul {
 }
 
 .medium-chart {
-  display: flex;
-  width: var(--medium-width);
+  flex: 1; 
+  max-width: calc(50% - 10px); 
   background-color: #98ABEE;
   border-radius: 20px;
   padding: 20px;
+  min-width: 0;
 }
 
 .small-chart {
@@ -142,7 +146,9 @@ p, ul {
 }
 
 .wide-chart {
+  flex: 1;
   display: flex;
+  flex-wrap: wrap;
   width: var(--wide-width);
   flex-direction: column;
   background-color: #98ABEE;
