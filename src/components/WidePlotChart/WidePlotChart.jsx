@@ -153,8 +153,8 @@ const WidePlotChart = () => {
 
     if (chartRef.current) {
       const chart = chartRef.current.chart;
-      const currDeviceWidth = window.innerWidth;
-      chart.setSize(currDeviceWidth * 0.77, 300); // Adjust width and height as needed
+      const containerWidth = chartRef.current.clientWidth;
+      chart.setSize(containerWidth, 300); // Set width dynamically, height will adjust automatically
     }
 
     return (
@@ -167,52 +167,49 @@ const WidePlotChart = () => {
   };
 
   return (
-    <div
-      className="wide-chart" 
-      style={{
-        position: "relative",
-        minWidth: 0,
-        }}
-    >
-      <div
-        id="chart-container"
-        style={{ position: "relative", flex: 1, minWidth: "0" }}
-      >
-        <div style={{ position: "absolute", top: 10, right: "20px", zIndex: 1000 }}>
-          <select
-            value={selectedCategory}
-            onChange={handleCategoryChange}
-            style={{ color: "black" }}
-          >
-            <option value="General_Health">General Health</option>
-            <option value="Checkup">Checkup</option>
-            <option value="Exercise">Exercise</option>
-            <option value="Heart_Disease">Heart Disease</option>
-            <option value="Skin_Cancer">Skin Cancer</option>
-            <option value="Other_Cancer">Other Cancer</option>
-            <option value="Depression">Depression</option>
-            <option value="Diabetes">Diabetes</option>
-            <option value="Arthritis">Arthritis</option>
-            <option value="Sex">Sex</option>
-            <option value="Age_Category">Age Category</option>
-            <option value="Smoking_History">Smoking History</option>
-          </select>
-        </div>
-        <div style={{ position: "absolute", zIndex: 2000, top: "10px", left: "20px" }}>
-          <select
-            value={chartType}
-            onChange={handleChartTypeChange}
-            style={{ color: "black" }}
-          >
-            <option value="bar">Bar Chart</option>
-            <option value="pie">Pie Chart</option>
-            <option value="area">Area</option>
-          </select>
-        </div>
-        {renderChart()}
+    <div className="wide-chart">
+      <div className="chart-container">
+        {isLoading ? (
+          <div className="loading-animation"></div>
+        ) : (
+          <>
+            <div className="data-type">
+              <select
+                value={selectedCategory}
+                onChange={handleCategoryChange}
+                style={{ color: "black" }}
+              >
+                <option value="General_Health">General Health</option>
+                <option value="Checkup">Checkup</option>
+                <option value="Exercise">Exercise</option>
+                <option value="Heart_Disease">Heart Disease</option>
+                <option value="Skin_Cancer">Skin Cancer</option>
+                <option value="Other_Cancer">Other Cancer</option>
+                <option value="Depression">Depression</option>
+                <option value="Diabetes">Diabetes</option>
+                <option value="Arthritis">Arthritis</option>
+                <option value="Sex">Sex</option>
+                <option value="Age_Category">Age Category</option>
+                <option value="Smoking_History">Smoking History</option>
+              </select>
+            </div>
+            <div className="chart-type">
+              <select
+                value={chartType}
+                onChange={handleChartTypeChange}
+                style={{ color: "black" }}
+              >
+                <option value="bar">Bar Chart</option>
+                <option value="pie">Pie Chart</option>
+                <option value="area">Area</option>
+              </select>
+            </div>
+            {renderChart()}
+          </>
+        )}
       </div>
     </div>
-  );
+  );  
 };
 
 export default WidePlotChart;

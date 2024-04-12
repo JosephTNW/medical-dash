@@ -121,16 +121,6 @@ const MediumPlotChart = ({ dataGroup }) => {
           color: "#59c3ff",
           borderWidth: 0,
         },
-        pie: {
-          colors: [
-            "#5FC6E6",
-            "#07216A",
-            "#8595F0",
-            "#651997",
-            "#1D56F6",
-            "#8c564b",
-          ],
-        },
       },
       legend: {
         itemStyle: {
@@ -182,61 +172,51 @@ const MediumPlotChart = ({ dataGroup }) => {
   };
 
   return (
-    <div
-        className="medium-chart" 
-        style={{
-        position: "relative",
-        minWidth: 0,
-        }}
-    >
-      <div
-        id="chart-container"
-        style={{ position: "relative", flex: 1, minWidth: "0" }}
-      >
-        <div style={{ position: "absolute", top: 10, right: "20px", zIndex: 1000 }}>
-          <select
-            value={selectedColumn}
-            onChange={handleColumnChange}
-            style={{ color: "black" }}
-          >
-            {dataGroup === 4 && (
-              <>
-                <option value="Height_(cm)">Height</option>
-                <option value="Weight_(kg)">Weight</option>
-                <option value="BMI">BMI</option>
-              </>
-            )}
-            {dataGroup === 5 && (
-              <>
-                <option value="Alcohol_Consumption">Alcohol Consumption</option>
-                <option value="Fruit_Consumption">Fruit Consumption</option>
-                <option value="Green_Vegetables_Consumption">Green Vegetables Consumption</option>
-                <option value="FriedPotato_Consumption">Fried Potato Consumption</option>
-              </>
-            )}
-          </select>
-        </div>
-        <div style={{ position: "absolute", zIndex: 3000, top: "10px", left: "20px" }}>
-          <select
-            value={chartType}
-            onChange={handleChartTypeChange}
-            style={{ color: "black" }}
-          >
-            <option value="bar" style={{ color: "black" }}>
-              Bar Chart
-            </option>
-            <option value="pie" style={{ color: "black" }}>
-              Pie Chart
-            </option>
-            <option value="area" style={{ color: "black" }}>
-              Area
-            </option>
-          </select>
-        </div>
-        {renderChart()}
+    <div className="medium-chart">
+      <div className="chart-container">
+        {isLoading ? (
+          <div className="loading-animation"></div>
+        ) : (
+          <>
+            <div className="data-type">
+              <select
+                value={selectedColumn}
+                onChange={handleColumnChange}
+                style={{ color: "black" }}
+              >
+                {dataGroup === 4 && (
+                  <>
+                    <option value="Height_(cm)">Height</option>
+                    <option value="Weight_(kg)">Weight</option>
+                    <option value="BMI">BMI</option>
+                  </>
+                )}
+                {dataGroup === 5 && (
+                  <>
+                    <option value="Alcohol_Consumption">Alcohol</option>
+                    <option value="Fruit_Consumption">Fruit</option>
+                    <option value="Green_Vegetables_Consumption">Green Vegetables</option>
+                    <option value="FriedPotato_Consumption">Fried Potato</option>
+                  </>
+                )}
+              </select>
+            </div>
+            <div className="chart-type">
+              <select
+                value={chartType}
+                onChange={handleChartTypeChange}
+                style={{ color: "black" }}
+              >
+                <option value="bar">Bar Chart</option>
+                <option value="area">Area</option>
+              </select>
+            </div>
+            {renderChart()}
+          </>
+        )}
       </div>
     </div>
-  );
+  );  
 };
 
 export default MediumPlotChart;
