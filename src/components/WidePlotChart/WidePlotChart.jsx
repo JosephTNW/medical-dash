@@ -6,7 +6,7 @@ import HighchartsReact from "highcharts-react-official";
 const WidePlotChart = () => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState("General_Health");
+  const [selectedCategory, setSelectedCategory] = useState("Heart_Disease");
   const [chartType, setChartType] = useState("bar"); // Default to bar chart
   const chartRef = useRef(null);
 
@@ -151,11 +151,6 @@ const WidePlotChart = () => {
       ],
     };
 
-    if (chartRef.current) {
-      const chart = chartRef.current.chart;
-      const containerWidth = chartRef.current.clientWidth;
-      chart.setSize(containerWidth, 300); // Set width dynamically, height will adjust automatically
-    }
 
     return (
       <HighchartsReact
@@ -175,34 +170,33 @@ const WidePlotChart = () => {
           <>
             <div className="data-type">
               <select
+                className="dropdown-toggle"
                 value={selectedCategory}
                 onChange={handleCategoryChange}
-                style={{ color: "black" }}
               >
-                <option value="General_Health">General Health</option>
-                <option value="Checkup">Checkup</option>
-                <option value="Exercise">Exercise</option>
                 <option value="Heart_Disease">Heart Disease</option>
                 <option value="Skin_Cancer">Skin Cancer</option>
                 <option value="Other_Cancer">Other Cancer</option>
                 <option value="Depression">Depression</option>
                 <option value="Diabetes">Diabetes</option>
                 <option value="Arthritis">Arthritis</option>
-                <option value="Sex">Sex</option>
-                <option value="Age_Category">Age Category</option>
-                <option value="Smoking_History">Smoking History</option>
               </select>
+              <div className="dropdown-toggle-arrow">&#9662;</div>
+              {/* The arrow symbol "&#9662;" */}
             </div>
+            
             <div className="chart-type">
               <select
+                className="dropdown-toggle"
                 value={chartType}
                 onChange={handleChartTypeChange}
-                style={{ color: "black" }}
               >
                 <option value="bar">Bar Chart</option>
                 <option value="pie">Pie Chart</option>
                 <option value="area">Area</option>
               </select>
+              <div className="dropdown-toggle-arrow">&#9662;</div>
+              {/* The arrow symbol "&#9662;" */}
             </div>
             {renderChart()}
           </>

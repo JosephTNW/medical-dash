@@ -113,6 +113,14 @@ p, ul {
   padding: 20px;
 }
 
+.one-chart {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 20px; 
+  overflow-x: hidden; /* Prevent horizontal overflow */
+}
+
 .two-chart {
   display: flex;
   width: 100%;
@@ -153,32 +161,34 @@ p, ul {
   flex-wrap: wrap;
   width: var(--wide-width);
   flex-direction: column;
-  background-color: #4b4b4b;
+  background-color: #98ABEE;
   border-radius: 20px;
   padding: 20px;
   position: relative;
   min-width: 0;
+  min-height: 100px;
 }
 
 .chart-container {
   position: relative;
+  flex-wrap: wrap;
   flex: 1;
   min-width: 0;
   flex-direction: column; /* Make it a column layout */
-  background-color: #58d504;
+  background-color: #98ABEE;
 }
 
 .data-type {
   position: absolute;
-  top: 10px;
-  right: -15px;    
+  top: -5px;
+  right: -5px;    
   z-index: 1000;
 }
 
 .chart-type {
   position: absolute;
-  top: 10px;
-  left: 10px;    
+  top: -5px;
+  left: 5px;    
   z-index: 3000;
 }
 
@@ -195,10 +205,10 @@ p, ul {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); 
+  transform: translate(-50%, -50%);
   display: flex;
-  justify-content: center; 
-  align-items: center; 
+  justify-content: center;
+  align-items: center;
   border: 4px solid rgba(0, 0, 0, 0.1);
   border-left-color: #15b017;
   border-radius: 50%;
@@ -207,6 +217,56 @@ p, ul {
   animation: loading-spin 1s linear infinite;
 }
 
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-toggle {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: #191eab;
+  color: #ffffff;
+  padding: 8px 30px 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.dropdown-toggle:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.dropdown-toggle-arrow {
+  position: absolute;
+  top: 55%;
+  right: 5px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: rgb(255, 255, 255); 
+}
+
+.dropdown-options {
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-option {
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+.dropdown-option:hover {
+  background-color: #f0f0f0;
+}
 
 
 .patient-list {

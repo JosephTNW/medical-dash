@@ -4,7 +4,7 @@ import WidePlotChart from '../WidePlotChart/WidePlotChart';
 const WideChart = () => {
     return (
         <div className="wide-chart">
-            <WidePlotChart /> 
+            Chart Big
         </div>
     );
 };

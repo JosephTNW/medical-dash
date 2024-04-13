@@ -39,8 +39,13 @@ const MediumPlotChart = ({ dataGroup }) => {
   useEffect(() => {
     if (!isLoading && data.length > 0) {
       let firstOption = "";
+      // 4 & 5 = NUMERICAL 
       if (dataGroup === 4) {
-        const availableOptions = ["Height_(cm)", "Weight_(kg)", "BMI"];
+        const availableOptions = [
+          "Height_(cm)", 
+          "Weight_(kg)", 
+          "BMI"
+        ];
         firstOption = availableOptions.find(
           (option) =>
             data[0][option] !== null && data[0][option] !== undefined
@@ -51,6 +56,28 @@ const MediumPlotChart = ({ dataGroup }) => {
           "Fruit_Consumption",
           "Green_Vegetables_Consumption",
           "FriedPotato_Consumption",
+        ];
+        firstOption = availableOptions.find(
+          (option) =>
+            data[0][option] !== null && data[0][option] !== undefined
+        );
+      // 6 & 7 CATEGORICAL
+      } else if (dataGroup === 6) {
+        console.log("Data for dataGroup 6:", data);
+        const availableOptions = [
+          "General_Health",
+          "Checkup",
+          "Exercise",
+        ];
+        firstOption = availableOptions.find(
+          (option) =>
+            data[0][option] !== null && data[0][option] !== undefined
+        );
+      } else if (dataGroup === 7) {
+        const availableOptions = [
+          "Sex", 
+          "Age_Category",
+          "Smoking_History"
         ];
         firstOption = availableOptions.find(
           (option) =>
@@ -74,6 +101,24 @@ const MediumPlotChart = ({ dataGroup }) => {
 
     const columnData = data.map((item) => item[selectedColumn]);
 
+    let options;
+    if (isNumericalColumn(selectedColumn)) {
+      options = renderNumericalChart(columnData);
+    } else {
+      options = renderCategoricalChart(columnData);
+    }
+
+    return <HighchartsReact highcharts={Highcharts} options={options} />;
+  };
+
+  const isNumericalColumn = (column) => {
+    return (
+      ["Height_(cm)", "Weight_(kg)", "BMI"].includes(column) ||
+      column.endsWith("_Consumption")
+    );
+  };
+
+  const renderNumericalChart = (columnData) => {
     const filteredData = columnData.filter(
       (value) => value !== null && value !== undefined
     );
@@ -100,7 +145,7 @@ const MediumPlotChart = ({ dataGroup }) => {
       y: valueCounts[category] || 0,
     }));
 
-    const options = {
+    return {
       chart: {
         type: chartType,
         backgroundColor: "#98ABEE",
@@ -161,14 +206,81 @@ const MediumPlotChart = ({ dataGroup }) => {
         },
       ],
     };
+  };
 
-    return (
-      <HighchartsReact
-        highcharts={Highcharts}
-        options={options}
-        ref={chartRef}
-      />
+  const renderCategoricalChart = (columnData) => {
+    const filteredData = columnData.filter(
+      (value) => value !== null && value !== undefined
     );
+
+    const categories = [...new Set(filteredData)];
+
+    const seriesData = categories.map((category) => ({
+      name: category,
+      y: filteredData.filter((value) => value === category).length,
+    }));
+
+    return {
+      chart: {
+        type: chartType,
+        backgroundColor: "#98ABEE",
+        borderRadius: 10,
+      },
+      title: {
+        text: selectedColumn,
+        style: {
+          color: "white",
+        },
+      },
+      credits: {
+        enabled: false,
+      },
+      plotOptions: {
+        series: {
+          turboThreshold: 200000,
+          color: "#59c3ff",
+          borderWidth: 0,
+        },
+      },
+      legend: {
+        itemStyle: {
+          color: "white",
+        },
+      },
+      xAxis: {
+        categories: categories,
+        title: {
+          text: "Category",
+          style: {
+            color: "white",
+          },
+        },
+        labels: {
+          style: {
+            color: "white",
+          },
+        },
+      },
+      yAxis: {
+        title: {
+          text: "Frequency",
+          style: {
+            color: "white",
+          },
+        },
+        labels: {
+          style: {
+            color: "white",
+          },
+        },
+      },
+      series: [
+        {
+          name: "Frequency",
+          data: seriesData,
+        },
+      ],
+    };
   };
 
   return (
@@ -180,9 +292,9 @@ const MediumPlotChart = ({ dataGroup }) => {
           <>
             <div className="data-type">
               <select
+                className="dropdown-toggle"
                 value={selectedColumn}
                 onChange={handleColumnChange}
-                style={{ color: "black" }}
               >
                 {dataGroup === 4 && (
                   <>
@@ -195,28 +307,51 @@ const MediumPlotChart = ({ dataGroup }) => {
                   <>
                     <option value="Alcohol_Consumption">Alcohol</option>
                     <option value="Fruit_Consumption">Fruit</option>
-                    <option value="Green_Vegetables_Consumption">Green Vegetables</option>
-                    <option value="FriedPotato_Consumption">Fried Potato</option>
+                    <option value="Green_Vegetables_Consumption">
+                      Green Vegetables
+                    </option>
+                    <option value="FriedPotato_Consumption">
+                      Fried Potato
+                    </option>
+                  </>
+                )}
+                {dataGroup === 6 && (
+                  <>
+                    <option value="General_Health">General Health</option>
+                    <option value="Checkup">Checkup</option>
+                    <option value="Exercise">Exercise</option>
+                  </>
+                )}
+                {dataGroup === 7 && (
+                  <>
+                    <option value="Sex">Sex</option>
+                    <option value="Age_Category">Age Category</option>
+                    <option value="Smoking_History">Smoking History</option>
                   </>
                 )}
               </select>
+              <div className="dropdown-toggle-arrow">&#9662;</div>
+              {/* The arrow symbol "&#9662;" */}
             </div>
+
             <div className="chart-type">
               <select
+                className="dropdown-toggle"
                 value={chartType}
                 onChange={handleChartTypeChange}
-                style={{ color: "black" }}
               >
                 <option value="bar">Bar Chart</option>
                 <option value="area">Area</option>
               </select>
+              <div className="dropdown-toggle-arrow">&#9662;</div>
+              {/* The arrow symbol "&#9662;" */}
             </div>
             {renderChart()}
           </>
         )}
       </div>
     </div>
-  );  
+  );
 };
 
 export default MediumPlotChart;

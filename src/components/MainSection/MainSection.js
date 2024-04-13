@@ -1,6 +1,7 @@
 import React from "react";
 import WelcomePanel from "../WelcomePanel/WelcomePanel";
 import TwoCharts from "../TwoCharts/TwoCharts";
+import OneChart from "../OneChart/OneChart";
 import WideChart from "../WideChart/WideChart";
 import ThreeCharts from "../ThreeCharts/ThreeCharts";
 import Form from "../Form/Form";
@@ -14,9 +15,9 @@ class MainSection extends React.Component {
       return (
         <div className="mainsection">
           <WelcomePanel />
-          <TwoCharts />
-          <WideChart />
-          <ThreeCharts />
+          <TwoCharts leftDataGroup={4} rightDataGroup={5} />
+          <OneChart />
+          <TwoCharts leftDataGroup={6} rightDataGroup={7} />
         </div>
       );
     } else if (selected === "Manage") {
