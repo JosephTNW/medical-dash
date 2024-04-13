@@ -17,7 +17,7 @@ p, ul {
 }
 
 .App-background {
-  background-color: lightblue;
+  background-color: #0e44af;
   min-height: 100vh;
   display: flex;
   font-size: calc(10px + 2vmin);
@@ -25,15 +25,16 @@ p, ul {
 }
 
 .App-link {
-  color: #61dafb;
+  color: #3b69c5;
 }
 
 .sidebar {
-  background-color: #98ABEE;
+  background-image: linear-gradient(to bottom, #1f54be, #4d8ff2); /* Gradient from #1f54be to #4d8ff2 */
   display: flex;
   flex-direction: column;
   padding: 20px;
 }
+
 
 .brand {
   display: flex;
@@ -57,10 +58,12 @@ p, ul {
   padding: 10px;
   cursor: pointer;
   border-radius: 20px;
+  font-size: 22px;
+  font-weight:800;
 }
 
 .menu-item:hover, .active {
-  background-color: #6C7EEB;
+  background-color: #457ceb;
   transition: ease-in-out 0.3s;
 }
 
@@ -82,9 +85,10 @@ p, ul {
   margin: 20px;
   justify-content: space-between;
   align-items: center;
-  background-color: #98ABEE;
+  background-image: linear-gradient(to right, rgba(59, 105, 197, 0.8), rgba(57, 151, 232, 0.8)); /* Gradient with adjusted opacity */
   border-radius: 20px;
 }
+
 
 .wide-panel img {
   width: 100px;
@@ -139,7 +143,7 @@ p, ul {
 .medium-chart {
   flex: 1; 
   max-width: calc(50% - 10px); 
-  background-color: #98ABEE;
+  background-color: #3b69c5;
   border-radius: 20px;
   padding: 20px;
   min-width: 0;
@@ -161,7 +165,7 @@ p, ul {
   flex-wrap: wrap;
   width: var(--wide-width);
   flex-direction: column;
-  background-color: #98ABEE;
+  background-color: #3b69c5;
   border-radius: 20px;
   padding: 20px;
   position: relative;
@@ -175,7 +179,7 @@ p, ul {
   flex: 1;
   min-width: 0;
   flex-direction: column; /* Make it a column layout */
-  background-color: #98ABEE;
+  background-color: #3b69c5;
 }
 
 .data-type {
@@ -210,7 +214,7 @@ p, ul {
   justify-content: center;
   align-items: center;
   border: 4px solid rgba(0, 0, 0, 0.1);
-  border-left-color: #15b017;
+  border-left-color: #4eff51;
   border-radius: 50%;
   width: 40px;
   height: 40px;
@@ -221,18 +225,22 @@ p, ul {
 .dropdown {
   position: relative;
   display: inline-block;
+  outline:none;
 }
 
 .dropdown-toggle {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  background-color: #191eab;
+  background-color: #0e44af;
   color: #ffffff;
   padding: 8px 30px 8px 10px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 10px;
   cursor: pointer;
+  outline: none; 
+  border-color:#0e44af;
+  font-weight: 600;
 }
 
 .dropdown-toggle:focus {
@@ -242,21 +250,21 @@ p, ul {
 
 .dropdown-toggle-arrow {
   position: absolute;
-  top: 55%;
+  top: 60%; /* Adjusted to vertically center the arrow */
   right: 5px;
   transform: translateY(-50%);
   pointer-events: none;
-  color: rgb(255, 255, 255); 
+  color: rgb(255, 255, 255);
+  flex-wrap: wrap;
 }
+
 
 .dropdown-options {
   position: absolute;
-  background-color: #fff;
-  border: 1px solid #ccc;
   border-radius: 4px;
   max-height: 200px;
   overflow-y: auto;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: none; /* Remove border */
 }
 
 .dropdown-option {
@@ -264,9 +272,7 @@ p, ul {
   cursor: pointer;
 }
 
-.dropdown-option:hover {
-  background-color: #f0f0f0;
-}
+
 
 
 .patient-list {

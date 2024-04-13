@@ -81,7 +81,7 @@ const WidePlotChart = () => {
     const options = {
       chart: {
         type: chartType,
-        backgroundColor: "#98ABEE", // Lighter shade of #0a3791
+        backgroundColor: "#3b69c5", 
         borderRadius: 10, // Set border radius to 10px
       },
       title: {

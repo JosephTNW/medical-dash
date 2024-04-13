@@ -148,7 +148,7 @@ const MediumPlotChart = ({ dataGroup }) => {
     return {
       chart: {
         type: chartType,
-        backgroundColor: "#98ABEE",
+        backgroundColor: "#3b69c5",
         borderRadius: 10,
       },
       title: {
@@ -223,7 +223,7 @@ const MediumPlotChart = ({ dataGroup }) => {
     return {
       chart: {
         type: chartType,
-        backgroundColor: "#98ABEE",
+        backgroundColor: "#3b69c5",
         borderRadius: 10,
       },
       title: {
