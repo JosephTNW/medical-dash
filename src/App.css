@@ -36,7 +36,7 @@ body {
 
 button {
   border: none;
-  border-radius: 20px;
+  border-radius: 100%;
   padding: 10px;
   cursor: pointer;
   display: flex;
@@ -71,6 +71,25 @@ button img {
 .btn-edit:hover {
   background-color: #5766be;
   transition: ease-in-out 0.3s;
+}
+
+.btn-float {
+  position: fixed;
+  right: 30px;
+  bottom: 30px;
+  background-color: #009b03;
+  z-index: 99;
+}
+
+.btn-float img {
+  width: 30px;
+  height: 30px;
+}
+
+.btn-float:hover {
+  background-color: #007f02;
+  transition: ease-in-out 0.3s;
+
 }
 
 .card-content {

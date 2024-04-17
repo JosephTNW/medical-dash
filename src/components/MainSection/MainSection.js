@@ -6,6 +6,7 @@ import WideChart from "../WideChart/WideChart";
 import ThreeCharts from "../ThreeCharts/ThreeCharts";
 import Form from "../Form/Form";
 import PatientsList from "../PatientsList/PatientsList";
+import FloatingButton from "../FloatingButton/FloatingButton";
 
 class MainSection extends React.Component {
   render() {
@@ -24,6 +25,9 @@ class MainSection extends React.Component {
       return (
         <div className="mainsection">
           <PatientsList />
+          <FloatingButton 
+            src="/add.svg"
+            buttonName="Create Button"/>
         </div>
       );
     } else {
