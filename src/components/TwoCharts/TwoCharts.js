@@ -1,13 +1,11 @@
 import React from 'react';
 import MediumPlotChart from '../MediumPlotChart/MediumPlotChart';
-import WidePlotChart from '../WidePlotChart/WidePlotChart';
-import MediumChart from '../MediumChart/MediumChart';
 
-const TwoCharts = () => {
+const TwoCharts = ({ leftDataGroup, rightDataGroup }) => {
   return (
     <div className="two-chart">
-      <MediumPlotChart dataGroup={4} />
-      <MediumPlotChart dataGroup={5} />
+      <MediumPlotChart dataGroup={leftDataGroup} />
+      <MediumPlotChart dataGroup={rightDataGroup} />
     </div>
   );
 };
