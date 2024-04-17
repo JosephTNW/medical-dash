@@ -1,6 +1,7 @@
 import React from 'react';
 import MediumPlotChart from '../MediumPlotChart/MediumPlotChart';
 import WidePlotChart from '../WidePlotChart/WidePlotChart';
+import MediumChart from '../MediumChart/MediumChart';
 
 const TwoCharts = () => {
   return (

@@ -167,7 +167,7 @@ const WidePlotChart = () => {
   };
 
   return (
-    <div style={{ display: "flex", justifyContent: "space-between" }}>
+    <div>
       <div id="chart-container" style={{ position: "relative" }}>
         <div style={{ position: "absolute", top: 10, right:"20px", zIndex: 1000 }}>
           <select
