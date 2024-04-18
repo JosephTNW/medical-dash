@@ -11,7 +11,7 @@ import FloatingButton from "../FloatingButton/FloatingButton";
 class MainSection extends React.Component {
   render() {
     const { selected } = this.props;
-
+    
     if (selected === "Dashboard") {
       return (
         <div className="mainsection">

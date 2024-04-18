@@ -8,13 +8,14 @@ class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      selected: "Dashboard"
+      selected: localStorage.getItem("selected") || "Dashboard"
     };
     this.handleSidebarClick = this.handleSidebarClick.bind(this);
   }
 
   handleSidebarClick(item) {
     this.setState({ selected: item });
+    localStorage.setItem("selected", item);
   }
 
   render() {
