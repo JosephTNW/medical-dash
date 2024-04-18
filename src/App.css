@@ -10,7 +10,7 @@ p,
 ul {
   margin: 0;
   padding: 0;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 body {
@@ -65,7 +65,7 @@ button img {
 }
 
 .btn-edit {
-  background-color: #6C7EEB;
+  background-color: #6c7eeb;
 }
 
 .btn-edit:hover {
@@ -89,7 +89,6 @@ button img {
 .btn-float:hover {
   background-color: #007f02;
   transition: ease-in-out 0.3s;
-
 }
 
 .card-content {
@@ -98,7 +97,11 @@ button img {
 }
 
 .sidebar {
-  background-image: linear-gradient(to bottom, #1f54be, #4d8ff2); /* Gradient from #1f54be to #4d8ff2 */
+  background-image: linear-gradient(
+    to bottom,
+    #1f54be,
+    #4d8ff2
+  ); /* Gradient from #1f54be to #4d8ff2 */
   display: flex;
   flex-direction: column;
   padding: 20px;
@@ -127,7 +130,7 @@ button img {
   cursor: pointer;
   border-radius: 20px;
   font-size: 22px;
-  font-weight:800;
+  font-weight: 800;
 }
 
 .menu-item:hover,
@@ -152,7 +155,11 @@ button img {
   width: var(--wide-width);
   padding: 20px;
   margin-bottom: 20px;
-  background-image: linear-gradient(to right, rgba(59, 105, 197, 0.8), rgba(57, 151, 232, 0.8)); /* Gradient with adjusted opacity */
+  background-image: linear-gradient(
+    to right,
+    rgba(59, 105, 197, 0.8),
+    rgba(57, 151, 232, 0.8)
+  ); /* Gradient with adjusted opacity */
   border-radius: 20px;
   justify-content: space-between;
 }
@@ -196,8 +203,8 @@ button img {
 }
 
 .medium-chart {
-  flex: 1; 
-  max-width: calc(50% - 10px); 
+  flex: 1;
+  max-width: calc(50% - 10px);
   background-color: #3b69c5;
   border-radius: 20px;
   padding: 20px;
@@ -209,7 +216,7 @@ button img {
 .small-chart {
   display: flex;
   width: 29.5%;
-  background-color: #98ABEE;
+  background-color: #98abee;
   border-radius: 20px;
   padding: 20px;
 }
@@ -242,14 +249,14 @@ button img {
 .data-type {
   position: absolute;
   top: -5px;
-  right: -5px;    
+  right: -5px;
   z-index: 1000;
 }
 
 .chart-type {
   position: absolute;
   top: -5px;
-  left: 5px;    
+  left: 5px;
   z-index: 3000;
 }
 
@@ -273,11 +280,10 @@ button img {
   animation: loading-spin 1s linear infinite;
 }
 
-
 .dropdown {
   position: relative;
   display: inline-block;
-  outline:none;
+  outline: none;
 }
 
 .dropdown-toggle {
@@ -290,8 +296,8 @@ button img {
   border: 1px solid #ccc;
   border-radius: 10px;
   cursor: pointer;
-  outline: none; 
-  border-color:#0e44af;
+  outline: none;
+  border-color: #0e44af;
   font-weight: 600;
 }
 
@@ -310,7 +316,6 @@ button img {
   flex-wrap: wrap;
 }
 
-
 .dropdown-options {
   position: absolute;
   border-radius: 4px;
@@ -324,9 +329,6 @@ button img {
   cursor: pointer;
 }
 
-
-
-
 .patient-list {
   display: flex;
   flex-direction: row;
@@ -334,7 +336,7 @@ button img {
   width: 79.25vw;
   padding: 20px;
   margin-bottom: 20px;
-  background-color: #98ABEE;
+  background-color: #98abee;
   border-radius: 20px;
 }
 
@@ -347,7 +349,68 @@ button img {
   height: 100px;
 }
 
-.patient-list .info-icon, .info-icon-w {
+.error {
+  color: red;
+}
+
+.container {
+  width: 100%;
+  max-width: 768px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 2rem 1.5rem;
+  background-color: #bfebff;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.form {
+  align-self: center;
+}
+.form_input {
+  width: clamp(120px, 50vw, 420px);
+  height: 2.5rem;
+  padding: 0 1.25rem;
+  border: none;
+  border-radius: 10px;
+  margin: 0.625rem auto;
+  transition: all 250ms;
+  @media (min-width: 768px) {
+    width: clamp(120px, 35vw, 420px);
+  }
+}
+
+.form_label {
+  font-size: 1rem;
+  color: grey;
+  display: block;
+}
+
+.icon-option {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.icon-logo {
+  width: 35px;
+  height: 20px;
+  margin-right: 8px;
+}
+
+.selected-icon {
+  width: 35px;
+  height: 20px;
+  margin-right: 8px;
+}
+
+.patient-list .info-icon,
+.info-icon-w {
   width: 50px;
   height: 50px;
 }
@@ -384,7 +447,8 @@ button img {
   position: absolute;
   bottom: -2.5%;
   left: 50%;
-  transform: translateX(-50%) translateY(var(--translate-y, 0)) scale(var(--scale));
+  transform: translateX(-50%) translateY(var(--translate-y, 0))
+    scale(var(--scale));
   transition: 50ms transform;
   transform-origin: top center;
 }
@@ -398,10 +462,10 @@ button img {
   min-width: 150%;
   max-width: 500%;
   color: white;
-  padding: .5rem;
+  padding: 0.5rem;
   background: var(--tooltip-color);
   text-align: center;
-  border-radius: .3rem;
+  border-radius: 0.3rem;
 }
 
 .icon-container:hover::before,
@@ -411,13 +475,15 @@ button img {
 
 .icon-container::before {
   --translate-y: calc(0.9 * var(--arrow-size));
-  content: '';
+  content: "";
   border: var(--arrow-size) solid transparent;
   border-bottom-color: var(--tooltip-color);
   transform-origin: bottom center;
 }
 
-.icon-value, .icon-value-s, .icon-value-xs {
+.icon-value,
+.icon-value-s,
+.icon-value-xs {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -425,11 +491,11 @@ button img {
 }
 
 .icon-value-s {
-  font-size: .8em;
+  font-size: 0.8em;
 }
 
 .icon-value-xs {
-  font-size: .7em;
+  font-size: 0.7em;
   min-width: 75px;
   text-align: center;
 }
@@ -438,7 +504,9 @@ button img {
   top: 57%;
 }
 
-.weight, .bmi, .alcohol {
+.weight,
+.bmi,
+.alcohol {
   top: 62%;
 }
 
@@ -447,5 +515,5 @@ button img {
 }
 
 .icon-metric {
-  font-size: .3em;
+  font-size: 0.3em;
 }
