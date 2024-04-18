@@ -3,7 +3,8 @@ import WelcomePanel from "../WelcomePanel/WelcomePanel";
 import TwoCharts from "../TwoCharts/TwoCharts";
 import WideChart from "../WideChart/WideChart";
 import ThreeCharts from "../ThreeCharts/ThreeCharts";
-import Form from "../Form/Form";
+// import Form from "../Form/Form";
+import HealthForm from "../Form/HealthForm";
 import PatientsList from "../PatientsList/PatientsList";
 
 class MainSection extends React.Component {
@@ -28,7 +29,8 @@ class MainSection extends React.Component {
     } else {
       return (
         <div className="mainsection">
-          <Form />
+          {/* <Form /> */}
+          <HealthForm />
         </div>
       );
     }

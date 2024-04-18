@@ -1,15 +1,16 @@
 :root {
-  --wide-width: calc(100% - 20px*2);
+  --wide-width: calc(100% - 20px * 2);
   --medium-width: calc(var(--wide-width) / 2 - 10px);
 }
 
 html,
 body,
 h2,
-p, ul {
+p,
+ul {
   margin: 0;
   padding: 0;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 .App {
@@ -29,7 +30,7 @@ p, ul {
 }
 
 .sidebar {
-  background-color: #98ABEE;
+  background-color: #98abee;
   display: flex;
   flex-direction: column;
   padding: 20px;
@@ -59,8 +60,9 @@ p, ul {
   border-radius: 20px;
 }
 
-.menu-item:hover, .active {
-  background-color: #6C7EEB;
+.menu-item:hover,
+.active {
+  background-color: #6c7eeb;
   transition: ease-in-out 0.3s;
 }
 
@@ -82,7 +84,7 @@ p, ul {
   margin: 20px;
   justify-content: space-between;
   align-items: center;
-  background-color: #98ABEE;
+  background-color: #98abee;
   border-radius: 20px;
 }
 
@@ -128,7 +130,7 @@ p, ul {
 .medium-chart {
   display: flex;
   width: var(--medium-width);
-  background-color: #98ABEE;
+  background-color: #98abee;
   border-radius: 20px;
   padding: 20px;
 }
@@ -136,7 +138,7 @@ p, ul {
 .small-chart {
   display: flex;
   width: 23.5vw;
-  background-color: #98ABEE;
+  background-color: #98abee;
   border-radius: 20px;
   padding: 20px;
 }
@@ -145,7 +147,7 @@ p, ul {
   display: flex;
   width: var(--wide-width);
   flex-direction: column;
-  background-color: #98ABEE;
+  background-color: #98abee;
   border-radius: 20px;
   padding: 20px;
 }
@@ -154,11 +156,70 @@ p, ul {
   display: flex;
   flex-direction: row;
   padding: 20px;
-  background-color: #98ABEE;
+  background-color: #98abee;
   border-radius: 20px;
 }
 
 .patient-list img {
   width: 100px;
-  
+}
+
+.error {
+  color: red;
+}
+
+.container {
+  width: 100%;
+  max-width: 768px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 2rem 1.5rem;
+  background-color: #bfebff;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.form {
+  align-self: center;
+}
+.form_input {
+  width: clamp(120px, 50vw, 420px);
+  height: 2.5rem;
+  padding: 0 1.25rem;
+  border: none;
+  border-radius: 10px;
+  margin: 0.625rem auto;
+  transition: all 250ms;
+  @media (min-width: 768px) {
+    width: clamp(120px, 35vw, 420px);
+  }
+}
+
+.form_label {
+  font-size: 1rem;
+  color: grey;
+  display: block;
+}
+
+.icon-option {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.icon-logo {
+  width: 35px;
+  height: 20px;
+  margin-right: 8px;
+}
+
+.selected-icon {
+  width: 35px;
+  height: 20px;
+  margin-right: 8px;
 }
