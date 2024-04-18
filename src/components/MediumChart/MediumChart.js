@@ -1,10 +1,11 @@
 import React from 'react';
-import MediumChart from '../MediumPlotChart/MediumPlotChart';
+import MediumPlotChart from '../MediumPlotChart/MediumPlotChart';
 
 const MediumChart = () => {
     return (
         <div className="medium-chart">
-            Chart A
+            <MediumPlotChart dataGroup={4} />
+            <MediumPlotChart dataGroup={5} />
         </div>
     );
 };

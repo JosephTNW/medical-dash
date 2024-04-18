@@ -6,7 +6,7 @@ import HighchartsReact from "highcharts-react-official";
 const WidePlotChart = () => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState("General_Health");
+  const [selectedCategory, setSelectedCategory] = useState("Heart_Disease");
   const [chartType, setChartType] = useState("bar"); // Default to bar chart
   const chartRef = useRef(null);
 
@@ -81,7 +81,7 @@ const WidePlotChart = () => {
     const options = {
       chart: {
         type: chartType,
-        backgroundColor: "#98ABEE", // Lighter shade of #0a3791
+        backgroundColor: "#3b69c5", 
         borderRadius: 10, // Set border radius to 10px
       },
       title: {
@@ -151,11 +151,6 @@ const WidePlotChart = () => {
       ],
     };
 
-    if (chartRef.current) {
-      const chart = chartRef.current.chart;
-      const currDeviceWidth = window.innerWidth;
-      chart.setSize(currDeviceWidth * 0.77, 300); // Adjust width and height as needed
-    }
 
     return (
       <HighchartsReact
@@ -167,81 +162,48 @@ const WidePlotChart = () => {
   };
 
   return (
-    <div style={{ display: "flex", justifyContent: "space-between" }}>
-      <div id="chart-container" style={{ position: "relative" }}>
-        <div style={{ position: "absolute", top: 10, right:"20px", zIndex: 1000 }}>
-          <select
-            value={selectedCategory}
-            onChange={handleCategoryChange}
-            style={{ color: "black" }}
-          >
-            <option value="General_Health" style={{ color: "black" }}>
-              General Health
-            </option>
-            <option value="Checkup" style={{ color: "black" }}>
-              Checkup
-            </option>
-            <option value="Exercise" style={{ color: "black" }}>
-              Exercise
-            </option>
-            <option value="Heart_Disease" style={{ color: "black" }}>
-              Heart Disease
-            </option>
-            <option value="Skin_Cancer" style={{ color: "black" }}>
-              Skin Cancer
-            </option>
-            <option value="Other_Cancer" style={{ color: "black" }}>
-              Other Cancer
-            </option>
-            <option value="Depression" style={{ color: "black" }}>
-              Depression
-            </option>
-            <option value="Diabetes" style={{ color: "black" }}>
-              Diabetes
-            </option>
-            <option value="Arthritis" style={{ color: "black" }}>
-              Arthritis
-            </option>
-            <option value="Sex" style={{ color: "black" }}>
-              Sex
-            </option>
-            <option value="Age_Category" style={{ color: "black" }}>
-              Age Category
-            </option>
-            <option value="Smoking_History" style={{ color: "black" }}>
-              Smoking History
-            </option>
+    <div className="wide-chart">
+      <div className="chart-container">
+        {isLoading ? (
+          <div className="loading-animation"></div>
+        ) : (
+          <>
+            <div className="data-type">
+              <select
+                className="dropdown-toggle"
+                value={selectedCategory}
+                onChange={handleCategoryChange}
+              >
+                <option value="Heart_Disease">Heart Disease</option>
+                <option value="Skin_Cancer">Skin Cancer</option>
+                <option value="Other_Cancer">Other Cancer</option>
+                <option value="Depression">Depression</option>
+                <option value="Diabetes">Diabetes</option>
+                <option value="Arthritis">Arthritis</option>
+              </select>
+              <div className="dropdown-toggle-arrow">&#9662;</div>
+              {/* The arrow symbol "&#9662;" */}
+            </div>
             
-          </select>
-        </div>
-        <div
-          style={{
-            position: "absolute",
-            zIndex: 2000,
-            top: "10px",
-            left: "20px",
-          }}
-        >
-          <select
-            value={chartType}
-            onChange={handleChartTypeChange}
-            style={{ color: "black" }}
-          >
-            <option value="bar" style={{ color: "black" }}>
-              Bar Chart
-            </option>
-            <option value="pie" style={{ color: "black" }}>
-              Pie Chart
-            </option>
-            <option value="area" style={{ color: "black" }}>
-              Area
-            </option>
-          </select>
-        </div>
-        {renderChart()}
+            <div className="chart-type">
+              <select
+                className="dropdown-toggle"
+                value={chartType}
+                onChange={handleChartTypeChange}
+              >
+                <option value="bar">Bar Chart</option>
+                <option value="pie">Pie Chart</option>
+                <option value="area">Area</option>
+              </select>
+              <div className="dropdown-toggle-arrow">&#9662;</div>
+              {/* The arrow symbol "&#9662;" */}
+            </div>
+            {renderChart()}
+          </>
+        )}
       </div>
     </div>
-  );
+  );  
 };
 
 export default WidePlotChart;
