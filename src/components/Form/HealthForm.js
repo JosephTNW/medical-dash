@@ -65,7 +65,7 @@ const schema = z.object({
  * @param {Schema} schema
  */
 
-const HealthForm = () => {
+const HealthForm = ({ values, onBackClick, action }) => {
   const {
     register,
     handleSubmit,
@@ -87,6 +87,9 @@ const HealthForm = () => {
     }
   };
 
+  const handleBack = () => {
+    onBackClick();
+  };
   // const [selectedOption, setSelectedOption] = useState(icon[0]);
 
   // handle onChange event of the dropdown
@@ -103,6 +106,11 @@ const HealthForm = () => {
 
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
+      {onBackClick !== undefined ? (
+        <button className="btn-back" onClick={() => handleBack()}>
+          <img src="/arrow_back.svg"></img>
+        </button>
+      ) : null}
       <div className="container">
         <div className="form">
           {/* General Health */}
@@ -114,6 +122,9 @@ const HealthForm = () => {
               className="form_input"
               type="text"
               id="General_Health"
+              value={
+                values !== undefined ? values.General_Health : ""
+              }
               {...register("General_Health")}
             />
             {errors.General_Health && (
@@ -130,6 +141,7 @@ const HealthForm = () => {
               className="form_input"
               type="text"
               id="Checkup"
+              value={values !== undefined ? values.Checkup : ""}
               {...register("Checkup")}
             />
             {errors.Checkup && (
@@ -145,6 +157,7 @@ const HealthForm = () => {
             <select
               id="Exercise"
               {...register("Exercise")}
+              value={values !== undefined ? values.Exercise : ""}
               // value={selectedOption}
               // options={icon}
               // onChange={handleChange}
@@ -176,6 +189,9 @@ const HealthForm = () => {
             <select
               id="Heart_Disease"
               {...register("Heart_Disease")}
+              value={
+                values !== undefined ? values.Heart_Disease : ""
+              }
               // value={selectedOption}
               // options={icon}
               // onChange={handleChange}
@@ -202,6 +218,7 @@ const HealthForm = () => {
             <select
               id="Skin_Cancer"
               {...register("Skin_Cancer")}
+              value={values !== undefined ? values.Skin_Cancer : ""}
               // value={selectedOption}
               // options={icon}
               // onChange={handleChange}
@@ -228,6 +245,9 @@ const HealthForm = () => {
             <select
               id="Other_Cancer"
               {...register("Other_Cancer")}
+              value={
+                values !== undefined ? values.Other_Cancer : ""
+              }
               // value={selectedOption}
               // options={icon}
               // onChange={handleChange}
@@ -254,6 +274,7 @@ const HealthForm = () => {
             <select
               id="Depression"
               {...register("Depression")}
+              value={values !== undefined ? values.Depression : ""}
               // value={selectedOption}
               // options={icon}
               // onChange={handleChange}
@@ -281,6 +302,7 @@ const HealthForm = () => {
               className="form_input"
               type="text"
               id="Diabetes"
+              value={values !== undefined ? values.Diabetes : ""}
               {...register("Diabetes")}
             />
             {errors.Diabetes && (
@@ -297,6 +319,7 @@ const HealthForm = () => {
               className="form_input"
               type="text"
               id="Arthritis"
+              value={values !== undefined ? values.Arthritis : ""}
               {...register("Arthritis")}
             />
             {errors.Arthritis && (
@@ -326,6 +349,9 @@ const HealthForm = () => {
               className="form_input"
               type="text"
               id="Age_Category"
+              value={
+                values !== undefined ? values.Age_Category : ""
+              }
               {...register("Age_Category")}
             />
             {errors.Age_Category && (
@@ -342,6 +368,7 @@ const HealthForm = () => {
               className="form_input"
               type="number"
               id="Height_cm"
+              value={values !== undefined ? values.Height : ""}
               {...register("Height_cm", { valueAsNumber: true })}
             />
             {errors.Height_cm && (
@@ -358,6 +385,7 @@ const HealthForm = () => {
               className="form_input"
               type="number"
               id="Weight_kg"
+              value={values !== undefined ? values.Weight : ""}
               {...register("Weight_kg", { valueAsNumber: true })}
             />
             {errors.Weight_kg && (
@@ -374,6 +402,7 @@ const HealthForm = () => {
               className="form_input"
               type="number"
               id="BMI"
+              value={values !== undefined ? values.BMI : ""}
               {...register("BMI", { valueAsNumber: true })}
             />
             {errors.BMI && <p className="error">{errors.BMI.message}</p>}
@@ -387,6 +416,11 @@ const HealthForm = () => {
             <select //it should be Select with capital but for later this just my note
               id="Smoking_History"
               {...register("Smoking_History")}
+              value={
+                values !== undefined
+                  ? values.Smoking_History
+                  : ""
+              }
               // value={selectedOption}
               // options={icon}
               // onChange={handleChange}
@@ -414,6 +448,11 @@ const HealthForm = () => {
               className="form_input"
               type="text"
               id="Alcohol_Consumption"
+              value={
+                values !== undefined
+                  ? values.Alcohol_Consumption
+                  : ""
+              }
               {...register("Alcohol_Consumption")}
             />
             {errors.Alcohol_Consumption && (
@@ -430,6 +469,11 @@ const HealthForm = () => {
               className="form_input"
               type="text"
               id="Fruit_Consumption"
+              value={
+                values !== undefined
+                  ? values.Fruit_Consumption
+                  : ""
+              }
               {...register("Fruit_Consumption")}
             />
             {errors.Fruit_Consumption && (
@@ -449,6 +493,11 @@ const HealthForm = () => {
               className="form_input"
               type="text"
               id="Green_Vegetables_Consumption"
+              value={
+                values !== undefined
+                  ? values.Green_Vegetables_Consumption
+                  : ""
+              }
               {...register("Green_Vegetables_Consumption")}
             />
             {errors.Green_Vegetables_Consumption && (
@@ -467,6 +516,11 @@ const HealthForm = () => {
               className="form_input"
               type="text"
               id="FriedPotato_Consumption"
+              value={
+                values !== undefined
+                  ? values.FriedPotato_Consumption
+                  : ""
+              }
               {...register("FriedPotato_Consumption")}
             />
             {errors.FriedPotato_Consumption && (

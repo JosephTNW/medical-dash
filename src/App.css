@@ -59,6 +59,18 @@ button img {
   background-color: red;
 }
 
+.btn-back {
+  background-color: whitesmoke;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.btn-back:hover {
+  background-color: rgb(209, 209, 209);
+  transition: ease-in-out 0.3s;
+}
+
 .btn-del:hover {
   background-color: rgb(215, 0, 0);
   transition: ease-in-out 0.3s;
@@ -371,6 +383,7 @@ button img {
 
 .form {
   align-self: center;
+  position: relative;
 }
 .form_input {
   width: clamp(120px, 50vw, 420px);

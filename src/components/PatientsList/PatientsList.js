@@ -39,6 +39,14 @@ class PatientsList extends Component {
       });
   }
 
+  handleEdit(item) {
+    this.props.onEditClick(item);
+  }
+
+  handleDelete(id) {
+    this.props.onDeleteClick(id);
+  }
+
   render() {
     const { patients, isLoading } = this.state;
 
@@ -175,10 +183,10 @@ class PatientsList extends Component {
                     </div>
                   </div>
                   <div className="buttons">
-                    <button className="btn-edit">
+                    <button className="btn-edit" onClick={() => this.handleEdit(patient)}>
                       <img src="/edit.svg"></img>
                     </button>
-                    <button className="btn-del">
+                    <button className="btn-del" onClick={() => this.handleDelete(patient.id)}>
                       <img src="/delete.svg"></img>
                     </button>
                   </div>

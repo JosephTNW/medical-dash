@@ -8,6 +8,7 @@ import ThreeCharts from "../ThreeCharts/ThreeCharts";
 import HealthForm from "../Form/HealthForm";
 import PatientsList from "../PatientsList/PatientsList";
 import FloatingButton from "../FloatingButton/FloatingButton";
+import ManagePage from "../ManagePage/ManagePage";
 
 class MainSection extends React.Component {
   render() {
@@ -25,16 +26,12 @@ class MainSection extends React.Component {
     } else if (selected === "Manage") {
       return (
         <div className="mainsection">
-          <PatientsList />
-          <FloatingButton 
-            src="/add.svg"
-            buttonName="Create Button"/>
+          <ManagePage/>
         </div>
       );
     } else {
       return (
         <div className="mainsection">
-          {/* <Form /> */}
           <HealthForm />
         </div>
       );

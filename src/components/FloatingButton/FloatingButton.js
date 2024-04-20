@@ -1,6 +1,10 @@
 import React from 'react';
 
 class FloatingButton extends React.Component {
+    handleCreate(item) {
+        this.props.onCreateClick(item);
+    }
+
     render() {
         const { src, className, buttonName } = this.props;
         let btnClassName = "btn-float"
@@ -9,7 +13,7 @@ class FloatingButton extends React.Component {
         }
         return (
             <>
-                <button className={btnClassName}>
+                <button className={btnClassName} onClick={() => this.handleCreate()}>
                     <img src={src} alt={buttonName}></img>
                 </button>
             </>
