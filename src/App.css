@@ -530,3 +530,22 @@ button img {
 .icon-metric {
   font-size: 0.3em;
 }
+
+.pagination {
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.pagination button {
+  width: fit-content;
+  height: 30px;
+}
+
+.active-page {
+  background-color: #3b69c5;
+  color: whitesmoke;
+}

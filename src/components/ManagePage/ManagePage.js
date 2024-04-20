@@ -23,7 +23,6 @@ class ManagePage extends React.Component {
 
   handleEditClick(values) {
     this.setState({ action: "edit", patient: values });
-    console.log("edit clicked")
   }
 
   handleDeleteClick(id) {
