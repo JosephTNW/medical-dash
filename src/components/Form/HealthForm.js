@@ -51,8 +51,8 @@ const schema = z.object({
   Arthritis: z.string(),
   Sex: z.string(),
   Age_Category: z.string(),
-  Height_cm: z.number().int(),
-  Weight_kg: z.number().positive(),
+  Height: z.number().int(),
+  Weight: z.number().positive(),
   BMI: z.number().positive(),
   Smoking_History: z.string(),
   Alcohol_Consumption: z.string(),
@@ -77,9 +77,12 @@ const HealthForm = ({ values, onBackClick, action }) => {
 
   const onSubmit = async (data) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      if (values !== undefined) {
+        handleAction({ ...data, id: values.id });
+      } else {
+        handleAction(data);
+      }
       console.log(data);
-      throw new Error();
     } catch (error) {
       setError("root", {
         message: "Something went wrong",
@@ -90,6 +93,11 @@ const HealthForm = ({ values, onBackClick, action }) => {
   const handleBack = () => {
     onBackClick();
   };
+
+  const handleAction = (data) => {
+    action(data);
+  };
+
   // const [selectedOption, setSelectedOption] = useState(icon[0]);
 
   // handle onChange event of the dropdown
@@ -122,9 +130,8 @@ const HealthForm = ({ values, onBackClick, action }) => {
               className="form_input"
               type="text"
               id="General_Health"
-              value={
-                values !== undefined ? values.General_Health : ""
-              }
+              defaultValue={values !== undefined ? values.General_Health : ""}
+              onChange={(e) => console.log(e.target.value)}
               {...register("General_Health")}
             />
             {errors.General_Health && (
@@ -141,7 +148,7 @@ const HealthForm = ({ values, onBackClick, action }) => {
               className="form_input"
               type="text"
               id="Checkup"
-              value={values !== undefined ? values.Checkup : ""}
+              defaultValue={values !== undefined ? values.Checkup : ""}
               {...register("Checkup")}
             />
             {errors.Checkup && (
@@ -157,7 +164,7 @@ const HealthForm = ({ values, onBackClick, action }) => {
             <select
               id="Exercise"
               {...register("Exercise")}
-              value={values !== undefined ? values.Exercise : ""}
+              defaultValue={values !== undefined ? values.Exercise : ""}
               // value={selectedOption}
               // options={icon}
               // onChange={handleChange}
@@ -181,15 +188,15 @@ const HealthForm = ({ values, onBackClick, action }) => {
             )}
           </div>
 
-          {/* Heart Disease */}
+          {onBackClick !== undefined ? (
           <div>
             <label className="form_label" htmlFor="Heart_Disease">
-              History of Heart Disease:
+              Heart Disease:
             </label>
             <select
               id="Heart_Disease"
               {...register("Heart_Disease")}
-              value={
+              defaultValue={
                 values !== undefined ? values.Heart_Disease : ""
               }
               // value={selectedOption}
@@ -208,7 +215,7 @@ const HealthForm = ({ values, onBackClick, action }) => {
             {errors.Heart_Disease && (
               <p className="error">{errors.Heart_Disease.message}</p>
             )}
-          </div>
+          </div>): null}
 
           {/* Skin Cancer */}
           <div>
@@ -218,7 +225,7 @@ const HealthForm = ({ values, onBackClick, action }) => {
             <select
               id="Skin_Cancer"
               {...register("Skin_Cancer")}
-              value={values !== undefined ? values.Skin_Cancer : ""}
+              defaultValue={values !== undefined ? values.Skin_Cancer : ""}
               // value={selectedOption}
               // options={icon}
               // onChange={handleChange}
@@ -245,7 +252,7 @@ const HealthForm = ({ values, onBackClick, action }) => {
             <select
               id="Other_Cancer"
               {...register("Other_Cancer")}
-              value={
+              defaultValue={
                 values !== undefined ? values.Other_Cancer : ""
               }
               // value={selectedOption}
@@ -274,7 +281,7 @@ const HealthForm = ({ values, onBackClick, action }) => {
             <select
               id="Depression"
               {...register("Depression")}
-              value={values !== undefined ? values.Depression : ""}
+              defaultValue={values !== undefined ? values.Depression : ""}
               // value={selectedOption}
               // options={icon}
               // onChange={handleChange}
@@ -302,7 +309,7 @@ const HealthForm = ({ values, onBackClick, action }) => {
               className="form_input"
               type="text"
               id="Diabetes"
-              value={values !== undefined ? values.Diabetes : ""}
+              defaultValue={values !== undefined ? values.Diabetes : ""}
               {...register("Diabetes")}
             />
             {errors.Diabetes && (
@@ -319,7 +326,7 @@ const HealthForm = ({ values, onBackClick, action }) => {
               className="form_input"
               type="text"
               id="Arthritis"
-              value={values !== undefined ? values.Arthritis : ""}
+              defaultValue={values !== undefined ? values.Arthritis : ""}
               {...register("Arthritis")}
             />
             {errors.Arthritis && (
@@ -349,7 +356,7 @@ const HealthForm = ({ values, onBackClick, action }) => {
               className="form_input"
               type="text"
               id="Age_Category"
-              value={
+              defaultValue={
                 values !== undefined ? values.Age_Category : ""
               }
               {...register("Age_Category")}
@@ -361,35 +368,35 @@ const HealthForm = ({ values, onBackClick, action }) => {
 
           {/* Height (cm) */}
           <div>
-            <label className="form_label" htmlFor="Height_cm">
+            <label className="form_label" htmlFor="Height">
               Height (cm):
             </label>
             <input
               className="form_input"
               type="number"
-              id="Height_cm"
-              value={values !== undefined ? values.Height : ""}
-              {...register("Height_cm", { valueAsNumber: true })}
+              id="Height"
+              defaultValue={values !== undefined ? values.Height : ""}
+              {...register("Height", { valueAsNumber: true })}
             />
-            {errors.Height_cm && (
-              <p className="error">{errors.Height_cm.message}</p>
+            {errors.Height && (
+              <p className="error">{errors.Height.message}</p>
             )}
           </div>
 
           {/* Weight (kg) */}
           <div>
-            <label className="form_label" htmlFor="Weight_kg">
+            <label className="form_label" htmlFor="Weight">
               Weight (kg):
             </label>
             <input
               className="form_input"
               type="number"
-              id="Weight_kg"
-              value={values !== undefined ? values.Weight : ""}
-              {...register("Weight_kg", { valueAsNumber: true })}
+              id="Weight"
+              defaultValue={values !== undefined ? values.Weight : ""}
+              {...register("Weight", { valueAsNumber: true })}
             />
-            {errors.Weight_kg && (
-              <p className="error">{errors.Weight_kg.message}</p>
+            {errors.Weight && (
+              <p className="error">{errors.Weight.message}</p>
             )}
           </div>
 
@@ -402,7 +409,7 @@ const HealthForm = ({ values, onBackClick, action }) => {
               className="form_input"
               type="number"
               id="BMI"
-              value={values !== undefined ? values.BMI : ""}
+              defaultValue={values !== undefined ? values.BMI : ""}
               {...register("BMI", { valueAsNumber: true })}
             />
             {errors.BMI && <p className="error">{errors.BMI.message}</p>}
@@ -416,7 +423,7 @@ const HealthForm = ({ values, onBackClick, action }) => {
             <select //it should be Select with capital but for later this just my note
               id="Smoking_History"
               {...register("Smoking_History")}
-              value={
+              defaultValue={
                 values !== undefined
                   ? values.Smoking_History
                   : ""
@@ -448,7 +455,7 @@ const HealthForm = ({ values, onBackClick, action }) => {
               className="form_input"
               type="text"
               id="Alcohol_Consumption"
-              value={
+              defaultValue={
                 values !== undefined
                   ? values.Alcohol_Consumption
                   : ""
@@ -469,7 +476,7 @@ const HealthForm = ({ values, onBackClick, action }) => {
               className="form_input"
               type="text"
               id="Fruit_Consumption"
-              value={
+              defaultValue={
                 values !== undefined
                   ? values.Fruit_Consumption
                   : ""
@@ -493,7 +500,7 @@ const HealthForm = ({ values, onBackClick, action }) => {
               className="form_input"
               type="text"
               id="Green_Vegetables_Consumption"
-              value={
+              defaultValue={
                 values !== undefined
                   ? values.Green_Vegetables_Consumption
                   : ""
@@ -516,7 +523,7 @@ const HealthForm = ({ values, onBackClick, action }) => {
               className="form_input"
               type="text"
               id="FriedPotato_Consumption"
-              value={
+              defaultValue={
                 values !== undefined
                   ? values.FriedPotato_Consumption
                   : ""

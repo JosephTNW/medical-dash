@@ -33,11 +33,14 @@ class PatientsList extends Component {
     this.fetchData(Math.ceil(this.state.tot_items / this.state.items) - 1);
   }
 
+  refetchData() {
+    this.fetchData(this.state.page);
+  }
+
   fetchData(page) {
     this.setState({ isLoading: true });
     fetch(
-      "http://" +
-        process.env.REACT_APP_SERVER_ADD +
+      this.props.connection_string +
         this.state.items +
         "/" +
         page,

@@ -13,7 +13,7 @@ class Pagination extends Component {
     this.props.onStartClick();
   }
 
-  handleEnd(pages) {
+  handleEnd() {
     this.props.onEndClick();
   }
 
@@ -33,9 +33,6 @@ class Pagination extends Component {
     let right_dots = true;
     let left_arrow = true;
     let right_arrow = true;
-
-    console.log("curr_page:" + curr_page)
-    console.log("display_page:" + display_page)
 
     low = display_page - display_increment;
     high = display_page + display_increment;
@@ -61,9 +58,6 @@ class Pagination extends Component {
       low = low - (high - pages);
       high = pages;
     }
-
-    console.log("low:" + low)
-    console.log("high:" + high)
 
     for (let index = low; index <= high; ++index) {
       array.push(index);
