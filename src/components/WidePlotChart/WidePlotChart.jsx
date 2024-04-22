@@ -3,6 +3,8 @@ import Papa from "papaparse";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
+import axios from "axios";
+
 const WidePlotChart = () => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -10,33 +12,31 @@ const WidePlotChart = () => {
   const [chartType, setChartType] = useState("bar"); // Default to bar chart
   const chartRef = useRef(null);
 
+
+  // NEW USE EFFECT HOOK TO FETCH DATA FROM /COUNTALL ENDPOINT
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true);
       try {
-        const response = await fetch("/clean_cardiovasc-disease-pred.csv");
-        if (!response.ok) {
+        const response = await axios.get("http://localhost:3050/countAll");
+        if (response.status !== 200) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const csvData = await response.text();
-        Papa.parse(csvData, {
-          header: true,
-          dynamicTyping: true,
-          complete: (results) => {
-            setData(results.data);
-            setIsLoading(false);
-          },
-        });
+        /*console.log("Raw response data:", response.data); // Log the raw response data*/
+        setData(response.data); // Update the state with raw data
+        setIsLoading(false);
       } catch (error) {
-        console.error("Error fetching CSV data:", error);
+        console.error("Error fetching data from API:", error);
         setIsLoading(false);
       }
     };
-
+    
+  
     fetchData();
   }, []);
+  
 
   useEffect(() => {
+    /*console.log("Selected category:", selectedCategory);*/
     if (!isLoading && data.length > 0) {
       renderChart();
     }
@@ -51,33 +51,41 @@ const WidePlotChart = () => {
   };
 
   const renderChart = () => {
-    if (!data.length) return;
-
-    // Extract categories based on the selected category
-    const categories = data.map((item) => item[selectedCategory]);
-
-    // Filter out null and undefined values
-    const filteredCategories = categories.filter(
-      (category) => category !== null && category !== undefined
-    );
-
-    // Calculate the frequency of each category
-    const categoryCounts = filteredCategories.reduce((counts, category) => {
-      // HORIZONTAL AXIS
-      counts[category] = (counts[category] || 0) + 1;
-      return counts;
-    }, {});
-
-    // Extract unique categories and sort them
-    const uniqueCategories = Object.keys(categoryCounts).sort(); // VERTICAL AXIS
-
-    // Extract data for the selected column
-    const seriesData = uniqueCategories.map((category) => ({
-      name: category,
-      y: categoryCounts[category],
-    }));
-
+    /*console.log("Inside renderChart function");
+    console.log("Selected category:", selectedCategory);*/
+  
+    if (isLoading) {
+      /*console.log("Data is loading");*/
+      return <div className="loading-animation"></div>;
+    }
+  
+    if (!data[selectedCategory]) {
+      /*console.log("Selected category data is missing");*/
+      return null;
+    }
+  
+    const columnData = data[selectedCategory];
+  
+    // Function to render categorical chart
+    const renderCategoricalChart = (columnData) => {
+      // Aggregate counts for each category
+      const categoryCounts = {};
+      columnData.forEach((item) => {
+        const category = item[selectedCategory];
+        categoryCounts[category] = (categoryCounts[category] || 0) + item.category_count;
+      });
+  
+      // Convert counts to series data format
+      const seriesData = Object.keys(categoryCounts).map(category => ({
+        name: category,
+        y: categoryCounts[category],
+      }));
+  
+      return seriesData;
+    };
+  
     // Render the chart
+    const seriesData = renderCategoricalChart(columnData);
     const options = {
       chart: {
         type: chartType,
@@ -116,7 +124,7 @@ const WidePlotChart = () => {
         },
       },
       xAxis: {
-        categories: uniqueCategories,
+        categories: columnData.map((item) => item[selectedCategory]),
         title: {
           text: "Category",
           style: {
@@ -131,7 +139,6 @@ const WidePlotChart = () => {
       },
       yAxis: {
         title: {
-          categories: categoryCounts,
           text: "Frequency",
           style: {
             color: "white", // Font color set to white
@@ -150,7 +157,8 @@ const WidePlotChart = () => {
         },
       ],
     };
-
+  
+    /*console.log("Chart Options:", options);*/
 
     return (
       <HighchartsReact
