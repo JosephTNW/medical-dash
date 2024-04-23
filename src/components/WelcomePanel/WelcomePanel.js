@@ -8,7 +8,7 @@ const WelcomePanel = () => {
                 <p>Get access to all your medical information in one place.</p>
             </div>
             <div className="image-container">
-                <img src="logo512.png" alt="Medical Dashboard" />
+                <img src="medical_icon.png" alt="Medical Dashboard" />
             </div>
         </div>
     );
