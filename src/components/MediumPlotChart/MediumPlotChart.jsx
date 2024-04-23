@@ -22,7 +22,7 @@ const MediumPlotChart = ({ dataGroup }) => {
         if (response.status !== 200) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        /*console.log("Raw response data:", response.data); // Log the raw response data*/
+        console.log("Raw response data:", response.data); // Log the raw response data*/
         const data = response.data;
         const formattedData = {};
         for (const column in data) {
