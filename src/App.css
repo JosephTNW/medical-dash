@@ -14,7 +14,7 @@ ul, input {
 }
 
 body {
-  background-color: lightblue;
+  background-color: #0e44af;
   display: flex;
 }
 
@@ -207,6 +207,7 @@ button img {
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
+  gap: 50px;
 }
 
 .three-chart {
