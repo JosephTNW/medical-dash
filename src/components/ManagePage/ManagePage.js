@@ -129,20 +129,16 @@ class ManagePage extends React.Component {
       );
     } else if (action === "edit") {
       return (
-        <>
-          <HealthForm 
-            values={patient} 
-            onBackClick={this.handleBackClick}
-            action={this.updatePatient}/>
-        </>
+        <HealthForm 
+          values={patient} 
+          onBackClick={this.handleBackClick}
+          action={this.updatePatient}/>
       )
     } else if (action === "create"){
       return (
-        <>
-          <HealthForm 
-            onBackClick={this.handleBackClick}
-            action={this.createPatient}/>
-        </>
+        <HealthForm 
+          onBackClick={this.handleBackClick}
+          action={this.createPatient}/>
       )
     }
   }
