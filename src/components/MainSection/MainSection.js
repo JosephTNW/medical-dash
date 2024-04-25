@@ -72,7 +72,7 @@ class MainSection extends React.Component {
       );
     } else if (selected === "Manage") {
       return (
-        <div className="mainsection">
+        <div className="mainsection flex">
           <ManagePage />
         </div>
       );
