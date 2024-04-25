@@ -1,46 +1,29 @@
 import React, { useState, useEffect, useRef } from "react";
-import Papa from "papaparse";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
-import axios from "axios";
 
-const WidePlotChart = () => {
-  const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+const WidePlotChart = ({ data }) => {
   const [selectedCategory, setSelectedCategory] = useState("Heart_Disease");
-  const [chartType, setChartType] = useState("bar"); // Default to bar chart
+  const [chartType, setChartType] = useState("bar");
+  const [isLoading, setIsLoading] = useState(true); // Define isLoading variable
   const chartRef = useRef(null);
 
-
-  // NEW USE EFFECT HOOK TO FETCH DATA FROM /COUNTALL ENDPOINT
+  console.log("this is fikin dataa", data);
+  
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("http://localhost:3050/countAll");
-        if (response.status !== 200) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        /*console.log("Raw response data:", response.data); // Log the raw response data*/
-        setData(response.data); // Update the state with raw data
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Error fetching data from API:", error);
-        setIsLoading(false);
-      }
-    };
-    
-  
-    fetchData();
-  }, []);
-  
+    if (data && Object.keys(data).length > 0) {
+      setSelectedCategory(Object.keys(data)[0]);
+      setIsLoading(false);
+      console.log("Data loaded successfully. isLoading set to false.");
+    }
+  }, [data]);
 
   useEffect(() => {
-    /*console.log("Selected category:", selectedCategory);*/
-    if (!isLoading && data.length > 0) {
+    if (selectedCategory && data && data[selectedCategory]) {
       renderChart();
     }
-  }, [isLoading, data, selectedCategory, chartType]);
+  }, [selectedCategory, data, chartType]);
 
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
@@ -53,18 +36,23 @@ const WidePlotChart = () => {
   const renderChart = () => {
     /*console.log("Inside renderChart function");
     console.log("Selected category:", selectedCategory);*/
+
+    console.log("Rendering chart for category:", selectedCategory);
   
     if (isLoading) {
-      /*console.log("Data is loading");*/
+      console.log("Data is loading");
       return <div className="loading-animation"></div>;
     }
   
     if (!data[selectedCategory]) {
-      /*console.log("Selected category data is missing");*/
+      console.log("Selected category data is missing");
       return null;
     }
   
+    console.log("Rendering chart for category:", selectedCategory);
+
     const columnData = data[selectedCategory];
+    console.log("Column data:", columnData);
   
     // Function to render categorical chart
     const renderCategoricalChart = (columnData) => {
@@ -86,6 +74,9 @@ const WidePlotChart = () => {
   
     // Render the chart
     const seriesData = renderCategoricalChart(columnData);
+    console.log("Series data:", seriesData);
+
+
     const options = {
       chart: {
         type: chartType,
@@ -158,7 +149,7 @@ const WidePlotChart = () => {
       ],
     };
   
-    /*console.log("Chart Options:", options);*/
+    console.log("Chart Options:", options);
 
     return (
       <HighchartsReact
@@ -172,9 +163,7 @@ const WidePlotChart = () => {
   return (
     <div className="wide-chart">
       <div className="chart-container">
-        {isLoading ? (
-          <div className="loading-animation"></div>
-        ) : (
+
           <>
             <div className="data-type">
               <select
@@ -208,7 +197,7 @@ const WidePlotChart = () => {
             </div>
             {renderChart()}
           </>
-        )}
+        
       </div>
     </div>
   );  

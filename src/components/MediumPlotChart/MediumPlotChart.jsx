@@ -1,81 +1,62 @@
 import React, { useState, useEffect, useRef } from "react";
-import Papa from "papaparse";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
-import axios from "axios";
 
-const MediumPlotChart = ({ dataGroup }) => {
-  const [data, setData] = useState([]);
+const MediumPlotChart = ({ data, leftDataGroup, rightDataGroup }) => {
+
   const [isLoading, setIsLoading] = useState(true);
   const [selectedColumn, setSelectedColumn] = useState("");
   const [chartType, setChartType] = useState("bar");
   const chartRef = useRef(null);
 
-
-  
-  // NEW USE EFFECT HOOK TO FETCH DATA FROM /COUNTALL ENDPOINT
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("http://localhost:3050/countAll");
-        if (response.status !== 200) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        console.log("Raw response data:", response.data); // Log the raw response data*/
-        const data = response.data;
-        const formattedData = {};
-        for (const column in data) {
-          formattedData[column] = data[column];
-        }
-        setData(formattedData);
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Error fetching data from API:", error);
-        setIsLoading(false);
-      }
-    };
-  
-    fetchData();
-  }, []);
+  console.log("this is fikin dataa for mediumm", data);
 
   useEffect(() => {
+    console.log("Received leftDataGroup:", leftDataGroup);
+    console.log("Received rightDataGroup:", rightDataGroup);
+
+    console.log("this is me", data);
+    setIsLoading(false); // Update loading state after data retrieval
+
     if (!isLoading && Object.keys(data).length > 0) {
       let firstOption = "";
-  
-      // 4 & 5 NUMERICAL
-      if (dataGroup === 4) {
-        const availableOptions = ["Height", "Weight", "BMI"];
-        firstOption = availableOptions.find(
-          (option) => data[option] && data[option].length > 0
-        );
-      } else if (dataGroup === 5) {
-        const availableOptions = [
-          "Alcohol_Consumption",
-          "Fruit_Consumption",
-          "Green_Vegetables_Consumption",
-          "FriedPotato_Consumption",
-        ];
-        firstOption = availableOptions.find(
-          (option) => data[option] && data[option].length > 0
-        );
 
-      // 6 & 7 CATEGORICAL
-      } else if (dataGroup === 6) {
-        const availableOptions = ["General_Health", "Checkup", "Exercise"];
-        firstOption = availableOptions.find(
-          (option) => data[option] && data[option].length > 0
-        );
-      } else if (dataGroup === 7) {
-        const availableOptions = ["Sex", "Age_Category", "Smoking_History"];
-        firstOption = availableOptions.find(
-          (option) => data[option] && data[option].length > 0
-        );
-      }
-  
-      setSelectedColumn(firstOption);
+      console.log("this is mezzz");
+      console.log("first option is", firstOption);
+      console.log("this is me againn trying to see if data still have", data);
+      
+    // Check if leftDataGroup is 4
+    if (leftDataGroup === 4) {
+      console.log("Retrieved data for leftDataGroup 4");
+      const availableOptions = ["Height", "Weight", "BMI"];
+      firstOption = availableOptions.find(option => data[option] && data[option].length > 0);
     }
-  }, [isLoading, data, dataGroup]);
+    // Check if rightDataGroup is 5
+    else if (rightDataGroup === 5) {
+      console.log("Retrieved data for rightDataGroup 5");
+      const availableOptions = [
+        "Alcohol_Consumption", "Fruit_Consumption",
+        "Green_Vegetables_Consumption", "FriedPotato_Consumption"
+      ];
+      firstOption = availableOptions.find(option => data[option] && data[option].length > 0);
+    }
+    // Check if leftDataGroup is 6
+    else if (leftDataGroup === 6) {
+      console.log("Retrieved data for leftDataGroup 6");
+      const availableOptions = ["General_Health", "Checkup", "Exercise"];
+      firstOption = availableOptions.find(option => data[option] && data[option].length > 0);
+    }
+    // Check if rightDataGroup is 7
+    else if (rightDataGroup === 7) {
+      console.log("Retrieved data for rightDataGroup 7");
+      const availableOptions = ["Sex", "Age_Category", "Smoking_History"];
+      firstOption = availableOptions.find(option => data[option] && data[option].length > 0);
+    }
+
+    setSelectedColumn(firstOption);
+  }
+}, [isLoading, data, leftDataGroup, rightDataGroup]);
   
 
   const handleColumnChange = (event) => {
@@ -88,6 +69,8 @@ const MediumPlotChart = ({ dataGroup }) => {
 
   const renderChart = () => {
     /*console.log("Inside renderChart function");*/
+
+    console.log("Rendering chart for category mediumm:", selectedColumn);
   
     if (isLoading) {
       /*console.log("Data is loading");*/
@@ -292,14 +275,14 @@ const MediumPlotChart = ({ dataGroup }) => {
                 value={selectedColumn}
                 onChange={handleColumnChange}
               >
-                {dataGroup === 4 && (
+                {leftDataGroup === 4 && (
                   <>
                     <option value="Height">Height</option>
                     <option value="Weight">Weight</option>
                     <option value="BMI">BMI</option>
                   </>
                 )}
-                {dataGroup === 5 && (
+                {rightDataGroup === 5 && (
                   <>
                     <option value="Alcohol_Consumption">Alcohol</option>
                     <option value="Fruit_Consumption">Fruit</option>
@@ -311,14 +294,14 @@ const MediumPlotChart = ({ dataGroup }) => {
                     </option>
                   </>
                 )}
-                {dataGroup === 6 && (
+                {leftDataGroup === 6 && (
                   <>
                     <option value="General_Health">General Health</option>
                     <option value="Checkup">Checkup</option>
                     <option value="Exercise">Exercise</option>
                   </>
                 )}
-                {dataGroup === 7 && (
+                {rightDataGroup === 7 && (
                   <>
                     <option value="Sex">Sex</option>
                     <option value="Age_Category">Age Category</option>
@@ -351,3 +334,4 @@ const MediumPlotChart = ({ dataGroup }) => {
 };
 
 export default MediumPlotChart;
+
