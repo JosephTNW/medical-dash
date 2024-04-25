@@ -1,92 +1,63 @@
 import React, { useState, useEffect, useRef } from "react";
-import Papa from "papaparse";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
-const MediumPlotChart = ({ dataGroup }) => {
-  const [data, setData] = useState([]);
+
+const MediumPlotChart = ({ data, leftDataGroup, rightDataGroup }) => {
+
   const [isLoading, setIsLoading] = useState(true);
   const [selectedColumn, setSelectedColumn] = useState("");
   const [chartType, setChartType] = useState("bar");
   const chartRef = useRef(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      try {
-        const response = await fetch("/clean_cardiovasc-disease-pred.csv");
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const csvData = await response.text();
-        Papa.parse(csvData, {
-          header: true,
-          dynamicTyping: true,
-          complete: (results) => {
-            setData(results.data);
-            setIsLoading(false);
-          },
-        });
-      } catch (error) {
-        console.error("Error fetching CSV data:", error);
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
+  console.log("this is fikin dataa for mediumm", data);
 
   useEffect(() => {
-    if (!isLoading && data.length > 0) {
+    console.log("Received leftDataGroup:", leftDataGroup);
+    console.log("Received rightDataGroup:", rightDataGroup);
+
+    console.log("this is me", data);
+    setIsLoading(false); // Update loading state after data retrieval
+
+    if (!isLoading && Object.keys(data).length > 0) {
       let firstOption = "";
-      // 4 & 5 = NUMERICAL 
-      if (dataGroup === 4) {
-        const availableOptions = [
-          "Height_(cm)", 
-          "Weight_(kg)", 
-          "BMI"
-        ];
-        firstOption = availableOptions.find(
-          (option) =>
-            data[0][option] !== null && data[0][option] !== undefined
-        );
-      } else if (dataGroup === 5) {
-        const availableOptions = [
-          "Alcohol_Consumption",
-          "Fruit_Consumption",
-          "Green_Vegetables_Consumption",
-          "FriedPotato_Consumption",
-        ];
-        firstOption = availableOptions.find(
-          (option) =>
-            data[0][option] !== null && data[0][option] !== undefined
-        );
-      // 6 & 7 CATEGORICAL
-      } else if (dataGroup === 6) {
-        console.log("Data for dataGroup 6:", data);
-        const availableOptions = [
-          "General_Health",
-          "Checkup",
-          "Exercise",
-        ];
-        firstOption = availableOptions.find(
-          (option) =>
-            data[0][option] !== null && data[0][option] !== undefined
-        );
-      } else if (dataGroup === 7) {
-        const availableOptions = [
-          "Sex", 
-          "Age_Category",
-          "Smoking_History"
-        ];
-        firstOption = availableOptions.find(
-          (option) =>
-            data[0][option] !== null && data[0][option] !== undefined
-        );
-      }
-      setSelectedColumn(firstOption);
+
+      console.log("this is mezzz");
+      console.log("first option is", firstOption);
+      console.log("this is me againn trying to see if data still have", data);
+      
+    // Check if leftDataGroup is 4
+    if (leftDataGroup === 4) {
+      console.log("Retrieved data for leftDataGroup 4");
+      const availableOptions = ["Height", "Weight", "BMI"];
+      firstOption = availableOptions.find(option => data[option] && data[option].length > 0);
     }
-  }, [isLoading, data, dataGroup]);
+    // Check if rightDataGroup is 5
+    else if (rightDataGroup === 5) {
+      console.log("Retrieved data for rightDataGroup 5");
+      const availableOptions = [
+        "Alcohol_Consumption", "Fruit_Consumption",
+        "Green_Vegetables_Consumption", "FriedPotato_Consumption"
+      ];
+      firstOption = availableOptions.find(option => data[option] && data[option].length > 0);
+    }
+    // Check if leftDataGroup is 6
+    else if (leftDataGroup === 6) {
+      console.log("Retrieved data for leftDataGroup 6");
+      const availableOptions = ["General_Health", "Checkup", "Exercise"];
+      firstOption = availableOptions.find(option => data[option] && data[option].length > 0);
+    }
+    // Check if rightDataGroup is 7
+    else if (rightDataGroup === 7) {
+      console.log("Retrieved data for rightDataGroup 7");
+      const availableOptions = ["Sex", "Age_Category", "Smoking_History"];
+      firstOption = availableOptions.find(option => data[option] && data[option].length > 0);
+    }
+
+    setSelectedColumn(firstOption);
+  }
+}, [isLoading, data, leftDataGroup, rightDataGroup]);
+  
 
   const handleColumnChange = (event) => {
     setSelectedColumn(event.target.value);
@@ -97,36 +68,50 @@ const MediumPlotChart = ({ dataGroup }) => {
   };
 
   const renderChart = () => {
-    if (!data.length) return;
+    /*console.log("Inside renderChart function");*/
 
-    const columnData = data.map((item) => item[selectedColumn]);
-
+    console.log("Rendering chart for category mediumm:", selectedColumn);
+  
+    if (isLoading) {
+      /*console.log("Data is loading");*/
+      return <div className="loading-animation"></div>;
+    }
+  
+    if (!data[selectedColumn]) {
+     /* console.log("Selected column data is missing");
+      console.log("Selected column:", selectedColumn);
+      console.log("Data:", data);*/
+      return null;
+    }
+  
+    const columnData = data[selectedColumn];
+  
+    /*console.log("Column Data:", columnData);*/
+  
     let options;
     if (isNumericalColumn(selectedColumn)) {
       options = renderNumericalChart(columnData);
     } else {
       options = renderCategoricalChart(columnData);
     }
-
+  
     return <HighchartsReact highcharts={Highcharts} options={options} />;
   };
+  
+  
+  
+  
 
   const isNumericalColumn = (column) => {
-    return (
-      ["Height_(cm)", "Weight_(kg)", "BMI"].includes(column) ||
-      column.endsWith("_Consumption")
-    );
+    return ["Height", "Weight", "BMI"].includes(column) || column.endsWith("_Consumption");
   };
 
   const renderNumericalChart = (columnData) => {
-    const filteredData = columnData.filter(
-      (value) => value !== null && value !== undefined
-    );
-
-    const valueCounts = filteredData.reduce((counts, value) => {
-      counts[value] = (counts[value] || 0) + 1;
-      return counts;
-    }, {});
+    const valueCounts = {};
+    columnData.forEach((item) => {
+      const value = item[selectedColumn];
+      valueCounts[value] = (valueCounts[value] || 0) + item.category_count;
+    });
 
     const uniqueValues = Object.keys(valueCounts)
       .map(Number)
@@ -209,15 +194,9 @@ const MediumPlotChart = ({ dataGroup }) => {
   };
 
   const renderCategoricalChart = (columnData) => {
-    const filteredData = columnData.filter(
-      (value) => value !== null && value !== undefined
-    );
-
-    const categories = [...new Set(filteredData)];
-
-    const seriesData = categories.map((category) => ({
-      name: category,
-      y: filteredData.filter((value) => value === category).length,
+    const seriesData = columnData.map((item) => ({
+      name: item[selectedColumn],
+      y: item.category_count,
     }));
 
     return {
@@ -248,7 +227,7 @@ const MediumPlotChart = ({ dataGroup }) => {
         },
       },
       xAxis: {
-        categories: categories,
+        categories: columnData.map((item) => item[selectedColumn]),
         title: {
           text: "Category",
           style: {
@@ -296,14 +275,14 @@ const MediumPlotChart = ({ dataGroup }) => {
                 value={selectedColumn}
                 onChange={handleColumnChange}
               >
-                {dataGroup === 4 && (
+                {leftDataGroup === 4 && (
                   <>
-                    <option value="Height_(cm)">Height</option>
-                    <option value="Weight_(kg)">Weight</option>
+                    <option value="Height">Height</option>
+                    <option value="Weight">Weight</option>
                     <option value="BMI">BMI</option>
                   </>
                 )}
-                {dataGroup === 5 && (
+                {rightDataGroup === 5 && (
                   <>
                     <option value="Alcohol_Consumption">Alcohol</option>
                     <option value="Fruit_Consumption">Fruit</option>
@@ -315,14 +294,14 @@ const MediumPlotChart = ({ dataGroup }) => {
                     </option>
                   </>
                 )}
-                {dataGroup === 6 && (
+                {leftDataGroup === 6 && (
                   <>
                     <option value="General_Health">General Health</option>
                     <option value="Checkup">Checkup</option>
                     <option value="Exercise">Exercise</option>
                   </>
                 )}
-                {dataGroup === 7 && (
+                {rightDataGroup === 7 && (
                   <>
                     <option value="Sex">Sex</option>
                     <option value="Age_Category">Age Category</option>
@@ -355,3 +334,4 @@ const MediumPlotChart = ({ dataGroup }) => {
 };
 
 export default MediumPlotChart;
+

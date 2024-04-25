@@ -7,14 +7,14 @@ html,
 body,
 h2,
 p,
-ul {
+ul, input {
   margin: 0;
   padding: 0;
   font-family: "Roboto", sans-serif;
 }
 
 body {
-  background-color: lightblue;
+  background-color: #0e44af;
   display: flex;
 }
 
@@ -196,16 +196,21 @@ button img {
 
 .mainsection {
   width: 82vw;
-  flex-direction: column;
   align-items: center;
   gap: 20px;
   padding: 20px;
+}
+
+.flex {
+  display: flex;
+  flex-direction: column;
 }
 
 .two-chart {
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
+  gap: 50px;
 }
 
 .three-chart {
@@ -270,6 +275,30 @@ button img {
   top: -5px;
   left: 5px;
   z-index: 3000;
+}
+
+.form-child {
+  display: flex;
+  flex-direction: column;
+}
+
+.select-form, .btn-submit {
+  display: flex;
+  background-color: #1f54be;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  color: whitesmoke;
+  padding: 10px 20px;
+}
+
+.btn-submit {
+  background-color: #007bff;
+}
+
+.btn-submit:hover {
+  transition: all 0.2s ease-in-out;
+  background-color: #006adb;
 }
 
 @keyframes loading-spin {
@@ -384,7 +413,13 @@ button img {
 .form {
   align-self: center;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  align-self: center;
+  gap: 15px;
 }
+
 .form_input {
   width: clamp(120px, 50vw, 420px);
   height: 2.5rem;
@@ -400,7 +435,8 @@ button img {
 
 .form_label {
   font-size: 1rem;
-  color: grey;
+  font-weight: 700;
+  color: whitesmoke;
   display: block;
 }
 
@@ -529,4 +565,23 @@ button img {
 
 .icon-metric {
   font-size: 0.3em;
+}
+
+.pagination {
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.pagination button {
+  width: fit-content;
+  height: 30px;
+}
+
+.active-page {
+  background-color: #3b69c5;
+  color: whitesmoke;
 }

@@ -3,25 +3,47 @@ import ListItem from "../ListItem/ListItem";
 import BinaryIcon from "../BinaryIcon/BinaryIcon";
 import MultiIcon from "../MultiIcon/MultiIcon";
 import NumericalIcon from "../NumericalIcon/NumericalIcon";
+import Pagination from "./Pagination";
 
 class PatientsList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       items: 10,
+      tot_items: 0,
       page: 0,
       patients: [], // Initialize an empty array to store the patients
       isLoading: true,
     };
+
+    this.handleChangePage = this.handleChangePage.bind(this);
+    this.handleStartClick = this.handleStartClick.bind(this);
+    this.handleEndClick = this.handleEndClick.bind(this);
   }
 
-  componentDidMount() {
+  handleChangePage(page) {
+    this.fetchData(page);
+  }
+
+  handleStartClick() {
+    this.fetchData(0);
+  }
+
+  handleEndClick() {
+    this.fetchData(Math.ceil(this.state.tot_items / this.state.items) - 1);
+  }
+
+  refetchData() {
+    this.fetchData(this.state.page);
+  }
+
+  fetchData(page) {
+    this.setState({ isLoading: true });
     fetch(
-      "http://" +
-        process.env.REACT_APP_SERVER_ADD +
+      this.props.connection_string +
         this.state.items +
         "/" +
-        this.state.page,
+        page,
       {
         method: "GET",
         headers: {
@@ -31,11 +53,25 @@ class PatientsList extends Component {
     )
       .then((response) => response.json())
       .then((data) => {
-        this.setState({ patients: data, isLoading: false});
+        this.setState({ patients: data, isLoading: false, page: page});
         console.log(this.state.patients);
       })
       .catch((error) => {
         console.error("Error fetching patients:", error);
+      });
+  }
+
+  componentDidMount() {
+    this.fetchData(0);
+    fetch("http://" + process.env.REACT_APP_SERVER_ADD + "count", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        this.setState({ tot_items: data[0].count });
       });
   }
 
@@ -48,7 +84,7 @@ class PatientsList extends Component {
   }
 
   render() {
-    const { patients, isLoading } = this.state;
+    const { patients, isLoading, tot_items, page, items } = this.state;
 
     return (
       <>
@@ -183,16 +219,30 @@ class PatientsList extends Component {
                     </div>
                   </div>
                   <div className="buttons">
-                    <button className="btn-edit" onClick={() => this.handleEdit(patient)}>
+                    <button
+                      className="btn-edit"
+                      onClick={() => this.handleEdit(patient)}
+                    >
                       <img src="/edit.svg"></img>
                     </button>
-                    <button className="btn-del" onClick={() => this.handleDelete(patient.id)}>
+                    <button
+                      className="btn-del"
+                      onClick={() => this.handleDelete(patient.id)}
+                    >
                       <img src="/delete.svg"></img>
                     </button>
                   </div>
                 </li>
               ))}
             </ul>
+            <Pagination
+              tot_items={tot_items}
+              items={items}
+              curr_page={page}
+              onStartClick={this.handleStartClick}
+              onChangePage={this.handleChangePage}
+              onEndClick={this.handleEndClick}
+            />
           </>
         )}
       </>

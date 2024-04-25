@@ -4,8 +4,9 @@ import MediumPlotChart from '../MediumPlotChart/MediumPlotChart';
 const MediumChart = () => {
     return (
         <div className="medium-chart">
-            <MediumPlotChart dataGroup={4} />
-            <MediumPlotChart dataGroup={5} />
+            <MediumPlotChart leftDataGroup={4} />
+            <MediumPlotChart rightDataGroup={5} />
+
         </div>
     );
 };
