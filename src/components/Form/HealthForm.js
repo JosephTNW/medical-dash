@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import Field from "../Field/Field";
 // import React, { useState } from "react";
 // import Check from "./check-mark.png";
 // import Cross from "./cross.png";
@@ -61,6 +62,132 @@ const schema = z.object({
   FriedPotato_Consumption: z.string(),
 });
 
+const health_options = [
+  { value: "Excellent", label: "Excellent" },
+  { value: "Fair", label: "Fair" },
+  { value: "Good", label: "Good" },
+  { value: "Poor", label: "Poor" },
+  { value: "Very Good", label: "Very Good" },
+];
+
+const checkup_options = [
+  { value: "5 or more years ago", label: "5 or more years ago" },
+  { value: "Never", label: "Never" },
+  { value: "Within the past 2 years", label: "Within the past 2 years" },
+  { value: "Poor", label: "Poor" },
+  { value: "Very Good", label: "Very Good" },
+];
+
+const yes_no = [
+  {
+    value: "Yes",
+    label: "Yes",
+  },
+  {
+    value: "No",
+    label: "No",
+  },
+];
+
+const exercise_options = yes_no;
+
+const heart_options = yes_no;
+
+const skin_cancer_options = yes_no;
+
+const other_cancer_options = yes_no;
+
+const depression_options = yes_no;
+
+const arthritis_options = yes_no;
+
+const smoking_options = yes_no;
+
+const diabetes_options = [
+  {
+    value: "No",
+    label: "No",
+  },
+  {
+    value: "Yes",
+    label: "Yes",
+  },
+  {
+    value: "No, pre-diabetes or borderline diabetes",
+    label: "No, pre-diabetes or borderline diabetes",
+  },
+  {
+    value: "Yes, but female told only during pregnancy",
+    label: "Yes, but female told only during pregnancy",
+  },
+];
+
+const sex_options = [
+  {
+    value: "Male",
+    label: "Male",
+  },
+  {
+    value: "Female",
+    label: "Female",
+  },
+];
+
+const age_options = [
+  {
+    value: "70-74",
+    label: "70-74",
+  },
+  {
+    value: "60-64",
+    label: "60-64",
+  },
+  {
+    value: "75-79",
+    label: "75-79",
+  },
+  {
+    value: "80+",
+    label: "80+",
+  },
+  {
+    value: "65-69",
+    label: "65-69",
+  },
+  {
+    value: "50-54",
+    label: "50-54",
+  },
+  {
+    value: "45-49",
+    label: "45-49",
+  },
+  {
+    value: "18-24",
+    label: "18-24",
+  },
+  {
+    value: "30-34",
+    label: "30-34",
+  },
+  {
+    value: "55-59",
+    label: "55-59",
+  },
+  {
+    value: "35-39",
+    label: "35-39",
+  },
+  {
+    value: "40-44",
+    label: "40-44",
+  },
+  {
+    value: "25-29",
+    label: "25-29",
+  },
+];
+
 /**
  * @param {Schema} schema
  */
@@ -98,20 +225,6 @@ const HealthForm = ({ values, onBackClick, action }) => {
     action(data);
   };
 
-  // const [selectedOption, setSelectedOption] = useState(icon[0]);
-
-  // handle onChange event of the dropdown
-  // const handleChange = (e) => {
-  //   setSelectedOption(e);
-  // };
-
-  // const SingleValue = ({ children, ...props }) => (
-  //   <components.SingleValue {...props}>
-  //     <img src={selectedOption.icon} alt="s-icon" className="selected-icon" />
-  //     {children}
-  //   </components.SingleValue>
-  // );
-
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
       {onBackClick !== undefined ? (
@@ -119,429 +232,198 @@ const HealthForm = ({ values, onBackClick, action }) => {
           <img src="/arrow_back.svg"></img>
         </button>
       ) : null}
-      <div className="container">
         <div className="form">
           {/* General Health */}
-          <div>
-            <label className="form_label" htmlFor="General_Health">
-              General Health:
-            </label>
-            <input
-              className="form_input"
-              type="text"
-              id="General_Health"
-              defaultValue={values !== undefined ? values.General_Health : ""}
-              onChange={(e) => console.log(e.target.value)}
-              {...register("General_Health")}
-            />
-            {errors.General_Health && (
-              <p className="error">{errors.General_Health.message}</p>
-            )}
-          </div>
+          <Field
+            label={"General Health:"}
+            id="General_Health"
+            options={health_options}
+            defaultValue={values !== undefined ? values.General_Health : ""}
+            zod={register("General_Health")}
+          />
 
           {/* Checkup */}
-          <div>
-            <label className="form_label" htmlFor="Checkup">
-              Last Health Checkup:
-            </label>
-            <input
-              className="form_input"
-              type="text"
-              id="Checkup"
-              defaultValue={values !== undefined ? values.Checkup : ""}
-              {...register("Checkup")}
-            />
-            {errors.Checkup && (
-              <p className="error">{errors.Checkup.message}</p>
-            )}
-          </div>
+          <Field
+            id="Checkup"
+            label={"Last Health Checkup:"}
+            options={checkup_options}
+            defaultValue={values !== undefined ? values.Checkup : ""}
+            zod={register("Checkup")}
+          />
 
           {/* Exercise */}
-          <div>
-            <label className="form_label" htmlFor="Exercise">
-              Physical Activity (Last Month):
-            </label>
-            <select
-              id="Exercise"
-              {...register("Exercise")}
-              defaultValue={values !== undefined ? values.Exercise : ""}
-              // value={selectedOption}
-              // options={icon}
-              // onChange={handleChange}
-              // styles={{
-              //   singleValue: (base) => ({
-              //     ...base,
-              //     display: "flex",
-              //     alignItems: "center",
-              //   }),
-              // }}
-              // components={{
-              //   Option,
-              //   SingleValue,
-              // }}
-            >
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
-            </select>
-            {errors.Exercise && (
-              <p className="error">{errors.Exercise.message}</p>
-            )}
-          </div>
+          <Field
+            label={"Physical Activity (Last Month):"}
+            id="Exercise"
+            options={exercise_options}
+            zod={register("Exercise")}
+            defaultValue={values !== undefined ? values.Exercise : ""}
+          />
 
-          {onBackClick !== undefined ? (
-          <div>
-            <label className="form_label" htmlFor="Heart_Disease">
-              Heart Disease:
-            </label>
-            <select
+          {onBackClick && (
+            <Field
+              label={"Heart Disease:"}
               id="Heart_Disease"
-              {...register("Heart_Disease")}
-              defaultValue={
-                values !== undefined ? values.Heart_Disease : ""
-              }
-              // value={selectedOption}
-              // options={icon}
-              // onChange={handleChange}
-              // getOptionLabel={(e) => (
-              //   <div style={{ display: "flex", alignItems: "center" }}>
-              //     {e.icon}
-              //     <span style={{ marginLeft: 5 }}>{e.text}</span>
-              //   </div>
-              // )}
-            >
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
-            </select>
-            {errors.Heart_Disease && (
-              <p className="error">{errors.Heart_Disease.message}</p>
-            )}
-          </div>): null}
+              zod={register("Heart_Disease")}
+              defaultValue={values !== undefined ? values.Heart_Disease : ""}
+              options={heart_options}
+            />
+          )}
 
           {/* Skin Cancer */}
-          <div>
-            <label className="form_label" htmlFor="Skin_Cancer">
-              History of Skin Cancer:
-            </label>
-            <select
-              id="Skin_Cancer"
-              {...register("Skin_Cancer")}
-              defaultValue={values !== undefined ? values.Skin_Cancer : ""}
-              // value={selectedOption}
-              // options={icon}
-              // onChange={handleChange}
-              // getOptionLabel={(e) => (
-              //   <div style={{ display: "flex", alignItems: "center" }}>
-              //     {e.icon}
-              //     <span style={{ marginLeft: 5 }}>{e.text}</span>
-              //   </div>
-              // )}
-            >
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
-            </select>
-            {errors.Skin_Cancer && (
-              <p className="error">{errors.Skin_Cancer.message}</p>
-            )}
-          </div>
+          <Field
+            label={"History of Skin Cancer:"}
+            id="Skin_Cancer"
+            zod={register("Skin_Cancer")}
+            defaultValue={values !== undefined ? values.Skin_Cancer : ""}
+            options={skin_cancer_options}
+          />
 
           {/* Other Cancers */}
-          <div>
-            <label className="form_label" htmlFor="Other_Cancer">
-              History of Other Cancers:
-            </label>
-            <select
-              id="Other_Cancer"
-              {...register("Other_Cancer")}
-              defaultValue={
-                values !== undefined ? values.Other_Cancer : ""
-              }
-              // value={selectedOption}
-              // options={icon}
-              // onChange={handleChange}
-              // getOptionLabel={(e) => (
-              //   <div style={{ display: "flex", alignItems: "center" }}>
-              //     {e.icon}
-              //     <span style={{ marginLeft: 5 }}>{e.text}</span>
-              //   </div>
-              // )}
-            >
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
-            </select>
-            {errors.Other_Cancer && (
-              <p className="error">{errors.Other_Cancer.message}</p>
-            )}
-          </div>
+          <Field
+            label={"History of Other Cancers:"}
+            id="Other_Cancer"
+            zod={register("Other_Cancer")}
+            defaultValue={values !== undefined ? values.Other_Cancer : ""}
+            options={other_cancer_options}
+          />
 
           {/* Depression */}
-          <div>
-            <label className="form_label" htmlFor="Depression">
-              Experience of Depression:
-            </label>
-            <select
-              id="Depression"
-              {...register("Depression")}
-              defaultValue={values !== undefined ? values.Depression : ""}
-              // value={selectedOption}
-              // options={icon}
-              // onChange={handleChange}
-              // getOptionLabel={(e) => (
-              //   <div style={{ display: "flex", alignItems: "center" }}>
-              //     {e.icon}
-              //     <span style={{ marginLeft: 5 }}>{e.text}</span>
-              //   </div>
-              // )}
-            >
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
-            </select>
-            {errors.Depression && (
-              <p className="error">{errors.Depression.message}</p>
-            )}
-          </div>
+          <Field
+            label={"Experience of Depression:"}
+            id="Depression"
+            zod={register("Depression")}
+            defaultValue={values !== undefined ? values.Depression : ""}
+            options={depression_options}
+          />
 
           {/* Diabetes */}
-          <div>
-            <label className="form_label" htmlFor="Diabetes">
-              History of Diabetes:
-            </label>
-            <input
-              className="form_input"
-              type="text"
-              id="Diabetes"
-              defaultValue={values !== undefined ? values.Diabetes : ""}
-              {...register("Diabetes")}
-            />
-            {errors.Diabetes && (
-              <p className="error">{errors.Diabetes.message}</p>
-            )}
-          </div>
+          <Field
+            label={"History of Diabetes:"}
+            id="Diabetes"
+            defaultValue={values !== undefined ? values.Diabetes : ""}
+            zod={register("Diabetes")}
+            options={diabetes_options}
+          />
 
           {/* Arthritis */}
-          <div>
-            <label className="form_label" htmlFor="Arthritis">
-              History of Arthritis:
-            </label>
-            <input
-              className="form_input"
-              type="text"
-              id="Arthritis"
-              defaultValue={values !== undefined ? values.Arthritis : ""}
-              {...register("Arthritis")}
-            />
-            {errors.Arthritis && (
-              <p className="error">{errors.Arthritis.message}</p>
-            )}
-          </div>
+          <Field
+            label={"History of Arthritis:"}
+            id="Arthritis"
+            defaultValue={values !== undefined ? values.Arthritis : ""}
+            zod={register("Arthritis")}
+            options={arthritis_options}
+          />
 
           {/* Sex */}
-          <div>
-            <label className="form_label" htmlFor="Sex">
-              Gender:
-            </label>
-            <select id="Sex" {...register("Sex")}>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Other">Other</option>
-            </select>
-            {errors.Sex && <p className="error">{errors.Sex.message}</p>}
-          </div>
+          <Field
+            label={"Gender:"}
+            id="Sex"
+            defaultValue={values !== undefined ? values.Sex : ""}
+            zod={register("Sex")}
+            options={sex_options}
+          />
 
           {/* Age Category */}
-          <div>
-            <label className="form_label" htmlFor="Age_Category">
-              Age Category:
-            </label>
-            <input
-              className="form_input"
-              type="text"
-              id="Age_Category"
-              defaultValue={
-                values !== undefined ? values.Age_Category : ""
-              }
-              {...register("Age_Category")}
-            />
-            {errors.Age_Category && (
-              <p className="error">{errors.Age_Category.message}</p>
-            )}
-          </div>
+          <Field
+            label="Age Category:"
+            id="Age_Category"
+            options={age_options}
+            defaultValue={values !== undefined ? values.Age_Category : ""}
+            zod={register("Age_Category")}
+          />
 
           {/* Height (cm) */}
-          <div>
-            <label className="form_label" htmlFor="Height">
-              Height (cm):
-            </label>
-            <input
-              className="form_input"
-              type="number"
-              id="Height"
-              defaultValue={values !== undefined ? values.Height : ""}
-              {...register("Height", { valueAsNumber: true })}
-            />
-            {errors.Height && (
-              <p className="error">{errors.Height.message}</p>
-            )}
-          </div>
+          <Field
+            label={"Height (cm):"}
+            type="number"
+            id="Height"
+            defaultValue={values !== undefined ? values.Height : 0}
+            zod={register("Height", { valueAsNumber: true })}
+          />
 
           {/* Weight (kg) */}
-          <div>
-            <label className="form_label" htmlFor="Weight">
-              Weight (kg):
-            </label>
-            <input
-              className="form_input"
-              type="number"
-              id="Weight"
-              defaultValue={values !== undefined ? values.Weight : ""}
-              {...register("Weight", { valueAsNumber: true })}
-            />
-            {errors.Weight && (
-              <p className="error">{errors.Weight.message}</p>
-            )}
-          </div>
+          <Field
+            label={"Weight (kg):"}
+            type="number"
+            id="Weight"
+            defaultValue={values !== undefined ? values.Weight : 0}
+            zod={register("Weight", { valueAsNumber: true })}
+          />
 
           {/* BMI */}
-          <div>
-            <label className="form_label" htmlFor="BMI">
-              Body Mass Index (BMI):
-            </label>
-            <input
-              className="form_input"
-              type="number"
-              id="BMI"
-              defaultValue={values !== undefined ? values.BMI : ""}
-              {...register("BMI", { valueAsNumber: true })}
-            />
-            {errors.BMI && <p className="error">{errors.BMI.message}</p>}
-          </div>
+          <Field
+            label={"BMI:"}
+            className="form_input"
+            type="number"
+            id="BMI"
+            defaultValue={values !== undefined ? values.BMI : 0}
+            zod={register("BMI", { valueAsNumber: true })}
+          />
 
           {/* Smoking History */}
-          <div>
-            <label className="form_label" htmlFor="Smoking_History">
-              Smoking History:
-            </label>
-            <select //it should be Select with capital but for later this just my note
-              id="Smoking_History"
-              {...register("Smoking_History")}
-              defaultValue={
-                values !== undefined
-                  ? values.Smoking_History
-                  : ""
-              }
-              // value={selectedOption}
-              // options={icon}
-              // onChange={handleChange}
-              // getOptionLabel={(e) => (
-              //   <div style={{ display: "flex", alignItems: "center" }}>
-              //     {e.icon}
-              //     <span style={{ marginLeft: 5 }}>{e.text}</span>
-              //   </div>
-              // )}
-            >
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
-            </select>
-            {errors.Smoking_History && (
-              <p className="error">{errors.Smoking_History.message}</p>
-            )}
-          </div>
+          <Field
+            id="Smoking_History"
+            label={"Smoking History:"}
+            zod={register("Smoking_History")}
+            options={smoking_options}
+            defaultValue={values !== undefined ? values.Smoking_History : 0}
+          />
 
           {/* Alcohol Consumption */}
-          <div>
-            <label className="form_label" htmlFor="Alcohol_Consumption">
-              Alcohol Consumption Rate:
-            </label>
-            <input
-              className="form_input"
-              type="text"
-              id="Alcohol_Consumption"
-              defaultValue={
-                values !== undefined
-                  ? values.Alcohol_Consumption
-                  : ""
-              }
-              {...register("Alcohol_Consumption")}
-            />
-            {errors.Alcohol_Consumption && (
-              <p className="error">{errors.Alcohol_Consumption.message}</p>
-            )}
-          </div>
+          <Field
+            label={"Alcohol Consumption Rate (0-30):"}
+            type="number"
+            id="Alcohol_Consumption"
+            max={30}
+            defaultValue={
+              values !== undefined ? values.Alcohol_Consumption : 0
+            }
+            zod={register("Alcohol_Consumption")}
+          />
 
           {/* Fruit Consumption */}
-          <div>
-            <label className="form_label" htmlFor="Fruit_Consumption">
-              Fruit Consumption Figures:
-            </label>
-            <input
-              className="form_input"
-              type="text"
-              id="Fruit_Consumption"
-              defaultValue={
-                values !== undefined
-                  ? values.Fruit_Consumption
-                  : ""
-              }
-              {...register("Fruit_Consumption")}
-            />
-            {errors.Fruit_Consumption && (
-              <p className="error">{errors.Fruit_Consumption.message}</p>
-            )}
-          </div>
+          <Field
+            label={"Fruit Consumption Figures (0-120):"}
+            type="number"
+            max={120}
+            id="Fruit_Consumption"
+            defaultValue={values !== undefined ? values.Fruit_Consumption : 0}
+            zod={register("Fruit_Consumption")}
+          />
 
           {/* Green Vegetables Consumption */}
-          <div>
-            <label
-              className="form_label"
-              htmlFor="Green_Vegetables_Consumption"
-            >
-              Green Vegetables Consumption:
-            </label>
-            <input
-              className="form_input"
-              type="text"
-              id="Green_Vegetables_Consumption"
-              defaultValue={
-                values !== undefined
-                  ? values.Green_Vegetables_Consumption
-                  : ""
-              }
-              {...register("Green_Vegetables_Consumption")}
-            />
-            {errors.Green_Vegetables_Consumption && (
-              <p className="error">
-                {errors.Green_Vegetables_Consumption.message}
-              </p>
-            )}
-          </div>
+          <Field
+            label={"Green Vegetables Consumption (0-128):"}
+            className="form_input"
+            type="number"
+            max={128}
+            id="Green_Vegetables_Consumption"
+            defaultValue={
+              values !== undefined ? values.Green_Vegetables_Consumption : 0
+            }
+            zod={register("Green_Vegetables_Consumption")}
+          />
 
           {/* Fried Potato Consumption */}
-          <div>
-            <label className="form_label" htmlFor="FriedPotato_Consumption">
-              Fried Potato Consumption:
-            </label>
-            <input
-              className="form_input"
-              type="text"
-              id="FriedPotato_Consumption"
-              defaultValue={
-                values !== undefined
-                  ? values.FriedPotato_Consumption
-                  : ""
-              }
-              {...register("FriedPotato_Consumption")}
-            />
-            {errors.FriedPotato_Consumption && (
-              <p className="error">{errors.FriedPotato_Consumption.message}</p>
-            )}
-          </div>
+          <Field
+            label={"Fried Potato Consumption (0-128):"}
+            className="form_input"
+            type="text"
+            max={128}
+            id="FriedPotato_Consumption"
+            defaultValue={
+              values !== undefined ? values.FriedPotato_Consumption : 0
+            }
+            zod={register("FriedPotato_Consumption")}
+          />
 
           {/* Submit Button */}
-          <button disabled={isSubmitting} type="submit">
+          <button className="btn-submit" disabled={isSubmitting} type="submit">
             {isSubmitting ? "Loading..." : "Submit"}
           </button>
           {errors.root && <span className="error">{errors.root.message}</span>}
         </div>
-      </div>
     </form>
   );
 };
