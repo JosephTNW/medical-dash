@@ -195,12 +195,15 @@ button img {
 }
 
 .mainsection {
-  display: flex;
   width: 82vw;
-  flex-direction: column;
   align-items: center;
   gap: 20px;
   padding: 20px;
+}
+
+.flex {
+  display: flex;
+  flex-direction: column;
 }
 
 .two-chart {

@@ -78,7 +78,7 @@ class MainSection extends React.Component {
       );
     } else {
       return (
-        <div className="mainsection">
+        <div className="mainsection flex">
           <HealthForm />
         </div>
       );
