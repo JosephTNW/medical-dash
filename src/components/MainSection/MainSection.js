@@ -6,6 +6,7 @@ import MediumPlotChart from '../MediumPlotChart/MediumPlotChart';
 import WidePlotChart from "../WidePlotChart/WidePlotChart";
 import ThreeCharts from "../ThreeCharts/ThreeCharts";
 import ManagePage from "../ManagePage/ManagePage";
+import PredictionPage from "../PredictionPage/PredictionPage";
 import HealthForm from "../Form/HealthForm";
 
 const connection_string = "http://" + process.env.REACT_APP_SERVER_ADD;
@@ -19,6 +20,8 @@ class MainSection extends React.Component {
       isLoading: true,
     };
   }
+
+  
 
   fetchData = () => {
     this.setState({ isLoading: true });
@@ -79,7 +82,8 @@ class MainSection extends React.Component {
     } else {
       return (
         <div className="mainsection flex">
-          <HealthForm />
+
+          <PredictionPage />
         </div>
       );
     }

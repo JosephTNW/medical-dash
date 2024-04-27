@@ -44,7 +44,7 @@ const schema = z.object({
   General_Health: z.string(),
   Checkup: z.string(),
   Exercise: z.string(),
-  Heart_Disease: z.string(),
+  Heart_Disease: z.string().optional(),
   Skin_Cancer: z.string(),
   Other_Cancer: z.string(),
   Depression: z.string(),
@@ -207,6 +207,10 @@ const HealthForm = ({ values, onBackClick, action }) => {
       if (values !== undefined) {
         handleAction({ ...data, id: values.id });
       } else {
+        const formData = { ...data };
+        if (!onBackClick) {
+          delete formData.Heart_Disease;
+        }
         handleAction(data);
       }
       console.log(data);
@@ -409,7 +413,7 @@ const HealthForm = ({ values, onBackClick, action }) => {
           <Field
             label={"Fried Potato Consumption (0-128):"}
             className="form_input"
-            type="text"
+            type="number"
             max={128}
             id="FriedPotato_Consumption"
             defaultValue={
