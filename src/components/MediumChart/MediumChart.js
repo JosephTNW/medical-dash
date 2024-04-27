@@ -6,7 +6,6 @@ const MediumChart = () => {
         <div className="medium-chart">
             <MediumPlotChart leftDataGroup={4} />
             <MediumPlotChart rightDataGroup={5} />
-
         </div>
     );
 };

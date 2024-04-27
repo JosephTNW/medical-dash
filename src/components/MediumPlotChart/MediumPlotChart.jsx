@@ -2,35 +2,37 @@ import React, { useState, useEffect, useRef } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
-
-const MediumPlotChart = ({ data, leftDataGroup, rightDataGroup }) => {
+const MediumPlotChart = ({ countResults, leftDataGroup, rightDataGroup }) => {
 
   const [isLoading, setIsLoading] = useState(true);
   const [selectedColumn, setSelectedColumn] = useState("");
   const [chartType, setChartType] = useState("bar");
   const chartRef = useRef(null);
 
-  console.log("this is fikin dataa for mediumm", data);
+  console.log("this is fikin dataa for mediumm", countResults);
+
+  console.log("Received leftDataGroup BEFORE USE EFFECT:", leftDataGroup);
+  console.log("Received rightDataGroup BEFORE USE EFFECT:", rightDataGroup);
 
   useEffect(() => {
     console.log("Received leftDataGroup:", leftDataGroup);
     console.log("Received rightDataGroup:", rightDataGroup);
 
-    console.log("this is me", data);
+    console.log("this is me", countResults);
     setIsLoading(false); // Update loading state after data retrieval
 
-    if (!isLoading && Object.keys(data).length > 0) {
+    if (!isLoading && Object.keys(countResults).length > 0) {
       let firstOption = "";
 
       console.log("this is mezzz");
       console.log("first option is", firstOption);
-      console.log("this is me againn trying to see if data still have", data);
+      console.log("this is me againn trying to see if data still have", countResults);
       
     // Check if leftDataGroup is 4
     if (leftDataGroup === 4) {
       console.log("Retrieved data for leftDataGroup 4");
       const availableOptions = ["Height", "Weight", "BMI"];
-      firstOption = availableOptions.find(option => data[option] && data[option].length > 0);
+      firstOption = availableOptions.find(option => countResults[option] && countResults[option].length > 0);
     }
     // Check if rightDataGroup is 5
     else if (rightDataGroup === 5) {
@@ -39,24 +41,24 @@ const MediumPlotChart = ({ data, leftDataGroup, rightDataGroup }) => {
         "Alcohol_Consumption", "Fruit_Consumption",
         "Green_Vegetables_Consumption", "FriedPotato_Consumption"
       ];
-      firstOption = availableOptions.find(option => data[option] && data[option].length > 0);
+      firstOption = availableOptions.find(option => countResults[option] && countResults[option].length > 0);
     }
     // Check if leftDataGroup is 6
     else if (leftDataGroup === 6) {
       console.log("Retrieved data for leftDataGroup 6");
       const availableOptions = ["General_Health", "Checkup", "Exercise"];
-      firstOption = availableOptions.find(option => data[option] && data[option].length > 0);
+      firstOption = availableOptions.find(option => countResults[option] && countResults[option].length > 0);
     }
     // Check if rightDataGroup is 7
     else if (rightDataGroup === 7) {
       console.log("Retrieved data for rightDataGroup 7");
       const availableOptions = ["Sex", "Age_Category", "Smoking_History"];
-      firstOption = availableOptions.find(option => data[option] && data[option].length > 0);
+      firstOption = availableOptions.find(option => countResults[option] && countResults[option].length > 0);
     }
 
     setSelectedColumn(firstOption);
   }
-}, [isLoading, data, leftDataGroup, rightDataGroup]);
+}, [isLoading, countResults, leftDataGroup, rightDataGroup]);
   
 
   const handleColumnChange = (event) => {
@@ -77,14 +79,14 @@ const MediumPlotChart = ({ data, leftDataGroup, rightDataGroup }) => {
       return <div className="loading-animation"></div>;
     }
   
-    if (!data[selectedColumn]) {
+    if (!countResults[selectedColumn]) {
      /* console.log("Selected column data is missing");
       console.log("Selected column:", selectedColumn);
       console.log("Data:", data);*/
       return null;
     }
   
-    const columnData = data[selectedColumn];
+    const columnData = countResults[selectedColumn];
   
     /*console.log("Column Data:", columnData);*/
   
@@ -334,4 +336,3 @@ const MediumPlotChart = ({ data, leftDataGroup, rightDataGroup }) => {
 };
 
 export default MediumPlotChart;
-
