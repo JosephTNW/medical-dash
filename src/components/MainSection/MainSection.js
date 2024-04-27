@@ -8,9 +8,9 @@ import ThreeCharts from "../ThreeCharts/ThreeCharts";
 import ManagePage from "../ManagePage/ManagePage";
 import PredictionPage from "../PredictionPage/PredictionPage";
 import HealthForm from "../Form/HealthForm";
+import ModelPlotChart from "../ModelPlotChart/ModelPlotChart";
 
 const connection_string = "http://" + process.env.REACT_APP_SERVER_ADD;
-
 
 class MainSection extends React.Component {
   constructor(props) {
@@ -25,9 +25,9 @@ class MainSection extends React.Component {
 
   fetchData = () => {
     this.setState({ isLoading: true });
-    const url = connection_string + "countAll";
+    const url = connection_string + "dashContent";
     console.log("Fetching data from:", url); // Log the URL for debugging
-
+  
     fetch(url, {
       method: "GET",
       headers: {
@@ -41,14 +41,29 @@ class MainSection extends React.Component {
         return response.json();
       })
       .then((data) => {
-        this.setState({ data: data, isLoading: false });
-        console.log(this.state.data); // Check if data is properly set
+        // Extract data from the response
+
+        const countResults = data.count_results;
+        const modelResults = data.model_results;
+  
+        console.log("Count Results:", countResults); // Log countResults here
+        console.log("Model Results:", modelResults); // Log modelResults here
+  
+        console.log("Before setting state"); // Log before setting state
+  
+        // Set countResults directly in the state
+        this.setState({ countResults, modelResults, isLoading: false });
+  
+        console.log("Dash content fetched successfully:", countResults, modelResults);
+  
       })
       .catch((error) => {
         console.error("Error fetching patients:", error);
         this.setState({ isLoading: false });
       });
   };
+  
+  
 
   componentDidMount() {
     this.fetchData();
@@ -56,21 +71,25 @@ class MainSection extends React.Component {
 
   render() {
     const { selected } = this.props;
-    const { data, isLoading } = this.state;
+    const { data, isLoading, countResults, modelResults } = this.state;
 
-    console.log("J ", data);
+    console.log("render data for passing prop by MainSection ", data);
+    console.log("render count result for passing prop by MainSection", countResults);
+    console.log("render model result for passing prop by MainSection", modelResults);
 
     if (selected === "Dashboard") {
       return (
         <div className="mainsection">
           <WelcomePanel />
           
+          <ModelPlotChart modelResults={modelResults} />
 
-          <TwoCharts leftDataGroup={4} rightDataGroup={5}  data={data} />
+          <TwoCharts leftDataGroup={4} rightDataGroup={5}  countResults={countResults} />
 
-          <WidePlotChart data={data} />
+          {/* Pass both data and countResults to WidePlotChart */}
+          <WidePlotChart  countResults={countResults} />
 
-          <TwoCharts leftDataGroup={6} rightDataGroup={7}  data={data} />
+          <TwoCharts leftDataGroup={6} rightDataGroup={7}  countResults={countResults} />
         </div>
       );
     } else if (selected === "Manage") {
