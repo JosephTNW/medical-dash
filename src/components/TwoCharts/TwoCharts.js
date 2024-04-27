@@ -20,7 +20,7 @@ import MediumPlotChart from '../MediumPlotChart/MediumPlotChart';
 const TwoCharts = ({ leftDataGroup, rightDataGroup, countResults }) => {
   // Check if data and data.count_results are defined
   if (!countResults) {
-    return "this is wrong"; // Render nothing if data is undefined or count_results is undefined
+    return null; // Render nothing if data is undefined or count_results is undefined
   }
 
   /*

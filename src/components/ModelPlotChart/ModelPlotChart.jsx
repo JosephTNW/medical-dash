@@ -79,6 +79,11 @@ const ModelPlotChart = ({ modelResults }) => {
             color: 'white'
           }
         },
+        plotOptions: {
+            series: {
+              borderWidth: 0, // Remove border around bars
+            },
+          },
         series: seriesData.map((data, index) => ({
           ...data,
           color: index % 2 === 0 ? '#59c3ff' : '#FFD700', // Alternating colors for the bars
