@@ -53,6 +53,7 @@ class PredictionPage extends React.Component {
           return (
             <>
               <HealthForm 
+
               action={this.createPrediction} />
               {isLoading ? (
                 <div>Loading...</div>
