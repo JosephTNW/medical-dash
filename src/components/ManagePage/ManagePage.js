@@ -31,10 +31,12 @@ class ManagePage extends React.Component {
   }
 
   handleEditClick(values) {
+    console.log("Edit patient with id:", values.id);
     this.setState({ action: "edit", patient: values });
   }
 
   handleDeleteClick(id) {
+    console.log("Delete patient with id:", id);
     this.deletePatient(id);
     this.callRefetchData();
   }

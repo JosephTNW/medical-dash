@@ -2,28 +2,31 @@ import React, { useState, useEffect, useRef } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
+const WidePlotChart = ({ countResults }) => {
+  console.log("WidePlotChart - countResults:", countResults);
 
-const WidePlotChart = ({ data }) => {
   const [selectedCategory, setSelectedCategory] = useState("Heart_Disease");
   const [chartType, setChartType] = useState("bar");
   const [isLoading, setIsLoading] = useState(true); // Define isLoading variable
   const chartRef = useRef(null);
 
-  console.log("this is fikin dataa", data);
+  /*console.log("this is fikin dataa in WidePlot", data);*/
+  console.log("this is fikin count result api in WidePlot", countResults); // Optional chaining
   
   useEffect(() => {
-    if (data && Object.keys(data).length > 0) {
-      setSelectedCategory(Object.keys(data)[0]);
+    if (countResults && Object.keys(countResults).length > 0) {
+      setSelectedCategory(Object.keys(countResults)[0]);
       setIsLoading(false);
       console.log("Data loaded successfully. isLoading set to false.");
     }
-  }, [data]);
+  }, [countResults]);
+  
 
   useEffect(() => {
-    if (selectedCategory && data && data[selectedCategory]) {
+    if (selectedCategory && countResults && countResults[selectedCategory]) {
       renderChart();
     }
-  }, [selectedCategory, data, chartType]);
+  }, [selectedCategory, countResults, chartType]);
 
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
@@ -44,14 +47,14 @@ const WidePlotChart = ({ data }) => {
       return <div className="loading-animation"></div>;
     }
   
-    if (!data[selectedCategory]) {
+    if (!countResults[selectedCategory]) {
       console.log("Selected category data is missing");
       return null;
     }
   
     console.log("Rendering chart for category:", selectedCategory);
 
-    const columnData = data[selectedCategory];
+    const columnData = countResults[selectedCategory];
     console.log("Column data:", columnData);
   
     // Function to render categorical chart
@@ -75,7 +78,6 @@ const WidePlotChart = ({ data }) => {
     // Render the chart
     const seriesData = renderCategoricalChart(columnData);
     console.log("Series data:", seriesData);
-
 
     const options = {
       chart: {
