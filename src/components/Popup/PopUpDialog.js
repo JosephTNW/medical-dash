@@ -10,7 +10,9 @@ const PopupDialog = ({
     return (
         <div className="popup">
             <div className="popup-content">
-                <button className="close-btn" onClick={onClose} src="/add.svg"/>
+                <button className="close-btn" onClick={onClose}>
+                    <img src="cross.png"></img>
+                </button>
                 <div className="margin-up">
                     {children}
                 </div>

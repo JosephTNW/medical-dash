@@ -150,6 +150,12 @@ button img {
   margin-top: 20px;
 }
 
+.margin-up {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .menu-item {
   display: flex;
   align-items: center;
@@ -622,3 +628,4 @@ button img {
   background-color: #3b69c5;
   color: whitesmoke;
 }
+

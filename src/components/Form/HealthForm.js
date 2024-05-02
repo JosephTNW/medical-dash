@@ -71,11 +71,26 @@ const health_options = [
 ];
 
 const checkup_options = [
-  { value: "5 or more years ago", label: "5 or more years ago" },
-  { value: "Never", label: "Never" },
-  { value: "Within the past 2 years", label: "Within the past 2 years" },
-  { value: "Poor", label: "Poor" },
-  { value: "Very Good", label: "Very Good" },
+  {
+      "value": "Within the past 2 years",
+      "label": "Within the past 2 years"
+  },
+  {
+      "value": "Within the past year",
+      "label": "Within the past year"
+  },
+  {
+      "value": "5 or more years ago",
+      "label": "5 or more years ago"
+  },
+  {
+      "value": "Within the past 5 years",
+      "label": "Within the past 5 years"
+  },
+  {
+      "value": "Never",
+      "label": "Never"
+  }
 ];
 
 const yes_no = [

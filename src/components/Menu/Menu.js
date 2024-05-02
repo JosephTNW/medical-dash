@@ -17,6 +17,8 @@ class Menu extends React.Component {
     return (
       <div className="menu">
         <MenuItem selected={selected} icon="🏠" name="Dashboard" onClick={() => this.handleItemClick('Dashboard')} />
+        <MenuItem selected={selected} icon="💯" name="Evaluate" onClick={() => this.handleItemClick('Evaluate')}/>
+        <MenuItem selected={selected} icon="📈" name="Analyze" onClick={() => this.handleItemClick('Analyze')}/>
         <MenuItem selected={selected} icon="👨‍💼" name="Manage" onClick={() => this.handleItemClick('Manage')}/>
         <MenuItem selected={selected} icon="🧐" name="Predict" onClick={() => this.handleItemClick('Predict')}/>
       </div>

@@ -98,13 +98,25 @@ class MainSection extends React.Component {
           <ManagePage />
         </div>
       );
-    } else {
+    } else if (selected === "Predict"){
       return (
         <div className="mainsection flex">
 
           <PredictionPage />
         </div>
       );
+    } else if (selected === "Analyze"){
+      return (
+        <div className="mainsection">
+
+        </div>
+      )
+    } else {
+      return (
+        <div className="mainsection">
+
+        </div>
+      )
     }
   }
 }
