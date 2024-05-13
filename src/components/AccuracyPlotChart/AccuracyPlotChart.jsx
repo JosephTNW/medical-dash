@@ -2,22 +2,22 @@ import React, { useState, useEffect, useRef } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
-const ModelPlotChart = ({ modelResults }) => {
-  console.log("ModelPlotChart - modelResults:", modelResults);
+const AccuracyPlotChart = ({ accuracyResults }) => {
+  console.log("AccuracyPlotChart - accuracyResults:", accuracyResults);
 
   const [isLoading, setIsLoading] = useState(true);
   const [maxScore, setMaxScore] = useState(0);
   const chartRef = useRef(null);
 
   useEffect(() => {
-    if (modelResults && Object.keys(modelResults).length > 0) {
-      const scores = Object.values(modelResults).flatMap(scores => [scores.test_f1_score, scores.train_f1_score]);
+    if (accuracyResults && Object.keys(accuracyResults).length > 0) {
+      const scores = Object.values(accuracyResults).flatMap(scores => [scores.train_accuracy_score, scores.test_accuracy_score]);
       const max = Math.max(...scores);
       setMaxScore(max);
       setIsLoading(false);
       console.log("Data loaded successfully. isLoading set to false.");
     }
-  }, [modelResults]);
+  }, [accuracyResults]);
 
   const renderChart = () => {
     if (isLoading) {
@@ -25,10 +25,10 @@ const ModelPlotChart = ({ modelResults }) => {
       return <div className="loading-animation"></div>;
     }
 
-    const categories = Object.keys(modelResults);
+    const categories = Object.keys(accuracyResults);
     const seriesData = [
-      { name: 'test_f1_score', data: categories.map(category => modelResults[category].test_f1_score || 0) },
-      { name: 'train_f1_score', data: categories.map(category => modelResults[category].train_f1_score || 0) }
+      { name: 'test_accuracy_score', data: categories.map(category => accuracyResults[category].test_accuracy_score || 0) },
+      { name: 'train_accuracy_score', data: categories.map(category => accuracyResults[category].train_accuracy_score || 0) }
     ];
 
     const options = {
@@ -37,7 +37,7 @@ const ModelPlotChart = ({ modelResults }) => {
           backgroundColor: "#3b69c5",
         },
         title: {
-          text: 'Classifier Scores - F1 Score Comparison',
+          text: 'Classifier Scores - Accuracy Comparison',
           style: {
             color: 'white'
           }
@@ -103,4 +103,4 @@ const ModelPlotChart = ({ modelResults }) => {
   );
 };
 
-export default ModelPlotChart;
+export default AccuracyPlotChart;
