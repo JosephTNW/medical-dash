@@ -11,6 +11,8 @@ import HealthForm from "../Form/HealthForm";
 import ModelPlotChart from "../ModelPlotChart/ModelPlotChart";
 import AccuracyPlotChart from "../AccuracyPlotChart/AccuracyPlotChart";
 
+import NumericalMultivarPlotChart from "../NumericalMultivarPlotChart/NumericalMultivarPlotChart";
+
 const connection_string = "http://" + process.env.REACT_APP_SERVER_ADD;
 
 class MainSection extends React.Component {
@@ -22,7 +24,9 @@ class MainSection extends React.Component {
       countResults: [],
       modelResults: [],
       accuracyResults: [],  // Added state for accuracyResults
-      analyzeData: [], // Added state for analyzeData
+
+      numMultivariate: [], // Added state for numMultivariate
+
     };
   }
 
@@ -44,36 +48,39 @@ class MainSection extends React.Component {
       })
       .then((data) => {
         if (isAnalyze) {
-          this.setState({ analyzeData: data, isLoading: false });
+          const numMultivariate = data.numerical_multivariate;
+          this.setState({ numMultivariate, isLoading: false });
+          console.log("Data fetched successfully numerical multivariate jaya:", data);
+
         } else if (isEvaluate) {
           const accuracyResults = data.model_results;
           this.setState({ accuracyResults, isLoading: false });
+          console.log("Data fetched successfully evalaute jaya:", data);
+
         } else {
           const countResults = data.count_results;
           const modelResults = data.model_results;
           this.setState({ countResults, modelResults, isLoading: false });
         }
-        console.log("Data fetched successfully:", data);
+        console.log("Data fetched successfully dashboard count-model jaya:", data);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
         this.setState({ isLoading: false });
       });
   };
+  
 
   componentDidMount() {
     this.fetchData(connection_string + "dashContent");
-
-    if (this.props.selected === "Analyze") {
-      this.fetchData(connection_string + "analyzeAttributes", true);
-    } else if (this.props.selected === "Evaluate") {
-      this.fetchData(connection_string + "evaluateContent", false, true);
-    }
+    this.fetchData(connection_string + "analyzeAttributes", true);
+    this.fetchData(connection_string + "evaluateContent", false, true);
   }
+  
 
   render() {
     const { selected } = this.props;
-    const { isLoading, countResults, modelResults, analyzeData, accuracyResults } = this.state;
+    const { isLoading, countResults, modelResults, accuracyResults, numMultivariate } = this.state;
 
     if (selected === "Dashboard") {
       return (
@@ -108,10 +115,9 @@ class MainSection extends React.Component {
     } else if (selected === "Analyze") {
       return (
         <div className="mainsection">
-          <WidePlotChart countResults={countResults} />
-          <ThreeCharts data={analyzeData} />
-          <ThreeCharts leftDataGroup={6} rightDataGroup={7} countResults={countResults} />
-          {/* Render other components that require data from "dashContent" */}
+          <ThreeCharts leftDataGroup={4} rightDataGroup={5} countResults={countResults} />
+
+          {/* <NumericalMultivarPlotChart numMultivariate={numMultivariate} /> */}
         </div>
       );
     } else {
