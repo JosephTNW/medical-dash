@@ -27,11 +27,6 @@ const SmallPlotChart = () => {
     { category: "Yes", yes: 15967, no: 223414 }
   ];
 
-  const heartData = [
-    { category: "Yes", yes: 24971, no: 0 },
-    { category: "No", yes: 0, no: 283883 }
-  ];
-
   const skinData = [
     { category: "No", yes: 20281, no: 258579 },
     { category: "Yes", yes: 4690, no: 25304 }
@@ -126,17 +121,20 @@ const SmallPlotChart = () => {
             color: "white",
           },
         },
+        gridLineColor: "rgba(255, 255, 255, 0.001)", // Adjust grid line color
+        lineColor: "transparent", // Remove yAxis line
         max: 1, // Set maximum value of y-axis to 1
         // reversed: true,
       },
       plotOptions: {
         column: {
           stacking: "normal",
+          borderWidth: 0, // Remove border around the columns
           dataLabels: {
             enabled: true,
-            color: "white",
+            color: "purple",
             style: {
-                fontSize: "14px", // Increase font size
+                fontSize: "18px", // Increase font size
                 textOutline: "none", // Remove text outline
               },
             formatter: function () {
@@ -149,13 +147,13 @@ const SmallPlotChart = () => {
         {
           name: "No Risk",
           data: columnData.map((data) => data.no / (data.yes + data.no)),
-          color: "green",
+          color: "rgba(57, 255, 20, 0.9)",
           showInLegend: true,
         },
         {
           name: "At Risk",
           data: columnData.map((data) => data.yes / (data.yes + data.no)),
-          color: "red",
+          color: "#f25a5a",
           showInLegend: true,
         },
       ],
@@ -166,6 +164,8 @@ const SmallPlotChart = () => {
       },
     };
   };
+  
+  
 
   const renderChart = (data, columnName) => (
     <div style={{ width: "100%", flexGrow: 1 }}>
@@ -182,7 +182,6 @@ const SmallPlotChart = () => {
         {renderChart(generalHealthData, "General Health")}
         {renderChart(checkupData, "Checkup")}
         {renderChart(exerciseData, "Exercise")}
-        {renderChart(heartData, "Heart Disease")}
         {renderChart(skinData, "Skin Cancer")}
         {renderChart(otherData, "Other Cancer")}
         {renderChart(depressionData, "Depression")}
